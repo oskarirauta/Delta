@@ -14,13 +14,16 @@
 		0848945E520503ABA380A43E /* DSTouchPointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C227C12706DD11C704A608D /* DSTouchPointer.swift */; };
 		0BBBEFE062449697D0B326C1 /* ZIPFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED4317D99DC692A56A150642 /* ZIPFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		15F5E0E7D35B4819B3695EF1 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC55BAC13F5C08968BBC371F /* GameController.framework */; };
+		20E2B2EE3533F1AD72D79082 /* ProcessInfo+JIT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B359A22DC26A76AAAB4E869 /* ProcessInfo+JIT.swift */; };
 		24BC3530E01F76148B751D4E /* N64DeltaCore_Video.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26439E9396CCE471C31E9EA0 /* N64DeltaCore_Video.framework */; };
+		25E5F5A4FB927D4C9B213830 /* DolphinDeltaCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B55E66B822B2C1F3DF89C8E /* DolphinDeltaCore.framework */; };
 		2669DEB9B20CDE32310DA704 /* GBCDeltaCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC0FE694C7CE7F052CB2037 /* GBCDeltaCore.framework */; };
 		2827FE9BE3B129297410516D /* SNESDeltaCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61DC6217B24CE11865F9E02E /* SNESDeltaCore.framework */; };
 		285BDE1EB06AD6562B016AE7 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A799A6B29032DAFB4BE18414 /* SwiftUI.framework */; };
 		2D9F10546B0619B78BCB2E0E /* N64DeltaCore_RSP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F1E10895D8FF9FEFDD26FDA /* N64DeltaCore_RSP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E87500E6AD9B5F482ED8C7E /* GPGXDeltaCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6AD18AB4880CA9D0D654BB0A /* GPGXDeltaCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		31A2BA1627911A048A664F79 /* GameEmulatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E739F3996FF1BA904B82819B /* GameEmulatorView.swift */; };
+		359340DF86F6D5C0C842FF00 /* DolphinDeltaCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7B55E66B822B2C1F3DF89C8E /* DolphinDeltaCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3CD7CA8186B964E0258B7953 /* TVGameStateFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F254C189FECD3CB58BD86D /* TVGameStateFiles.swift */; };
 		3D73FB46CFD9235C972B05C0 /* TVDisplayResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727A914D367D005D7588DE2E /* TVDisplayResolution.swift */; };
 		3E267FFE86CB9433B2000941 /* DeltaTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0330355A29ED18024878E70C /* DeltaTVApp.swift */; };
@@ -40,6 +43,7 @@
 		9AC8E9B967CB8721010CB18B /* N64DeltaCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1DE0C284E3B538D335341B3 /* N64DeltaCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9BDF25C9E4164A798E4E9556 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E5B5760925A2C0EEFA9C27D /* Foundation.framework */; };
 		9DFDC6B31B8556620A591DAD /* GBADeltaCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7CD6561B3190F6712CAB2BC /* GBADeltaCore.framework */; };
+		A92994FA639758C97C9CFE38 /* PVlibDolphin-tvos.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 931B63A5D1D133C9AFDC5A05 /* PVlibDolphin-tvos.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AEB850EA73D0647FAA208873 /* TVGameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5C427E8C22FC7962AAC8E8 /* TVGameManager.swift */; };
 		B3555B047C6D59E758E991B9 /* TVControllerMappingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AFEE2832944F7F6E99CCA5 /* TVControllerMappingManager.swift */; };
 		B4E576CDA124B381C624C5FE /* Network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F16CC07DF5616718B805BD17 /* Network.framework */; };
@@ -72,6 +76,8 @@
 				DDEBB7735B56441E0F5A5CC1 /* GBADeltaCore.framework in Embed Frameworks */,
 				2E87500E6AD9B5F482ED8C7E /* GPGXDeltaCore.framework in Embed Frameworks */,
 				BB0ECEA6FC8E0307D2144B24 /* MelonDSDeltaCore.framework in Embed Frameworks */,
+				359340DF86F6D5C0C842FF00 /* DolphinDeltaCore.framework in Embed Frameworks */,
+				A92994FA639758C97C9CFE38 /* PVlibDolphin-tvos.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +92,7 @@
 		29F5EDD053300569E966666E /* Delta-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delta-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D49B708A7BBDEF0938D41DD /* ROMWebServer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ROMWebServer.swift; sourceTree = "<group>"; };
 		36F254C189FECD3CB58BD86D /* TVGameStateFiles.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TVGameStateFiles.swift; sourceTree = "<group>"; };
+		3B359A22DC26A76AAAB4E869 /* ProcessInfo+JIT.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "ProcessInfo+JIT.swift"; sourceTree = "<group>"; };
 		41E1EC8C27E28034324B688F /* ButtonCaptureState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ButtonCaptureState.swift; sourceTree = "<group>"; };
 		432BC8C6FAF0716BDB3D5AF0 /* DeltaCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DeltaCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E054CA6485698ED03500F56 /* TVGame.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TVGame.swift; sourceTree = "<group>"; };
@@ -97,8 +104,10 @@
 		6E5B5760925A2C0EEFA9C27D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		7177585E945B79624C2346F2 /* TVSystem+DeltaCore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "TVSystem+DeltaCore.swift"; sourceTree = "<group>"; };
 		727A914D367D005D7588DE2E /* TVDisplayResolution.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TVDisplayResolution.swift; sourceTree = "<group>"; };
+		7B55E66B822B2C1F3DF89C8E /* DolphinDeltaCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DolphinDeltaCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C227C12706DD11C704A608D /* DSTouchPointer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DSTouchPointer.swift; sourceTree = "<group>"; };
 		7F1E10895D8FF9FEFDD26FDA /* N64DeltaCore_RSP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = N64DeltaCore_RSP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		931B63A5D1D133C9AFDC5A05 /* PVlibDolphin-tvos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "PVlibDolphin-tvos.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A799A6B29032DAFB4BE18414 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		ADFE0DB0D8C5966591C086B0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B87EAF757F8A2E91852F52A4 /* ControllerRemapView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ControllerRemapView.swift; sourceTree = "<group>"; };
@@ -139,6 +148,7 @@
 				9DFDC6B31B8556620A591DAD /* GBADeltaCore.framework in Frameworks */,
 				76396764541CC1650FAF6F50 /* GPGXDeltaCore.framework in Frameworks */,
 				9581D2FA65E9819B15646E84 /* MelonDSDeltaCore.framework in Frameworks */,
+				25E5F5A4FB927D4C9B213830 /* DolphinDeltaCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +189,8 @@
 				C7CD6561B3190F6712CAB2BC /* GBADeltaCore.framework */,
 				6AD18AB4880CA9D0D654BB0A /* GPGXDeltaCore.framework */,
 				CE2EB7DB8934F79F41202019 /* MelonDSDeltaCore.framework */,
+				7B55E66B822B2C1F3DF89C8E /* DolphinDeltaCore.framework */,
+				931B63A5D1D133C9AFDC5A05 /* PVlibDolphin-tvos.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -227,6 +239,7 @@
 				36F254C189FECD3CB58BD86D /* TVGameStateFiles.swift */,
 				727A914D367D005D7588DE2E /* TVDisplayResolution.swift */,
 				CE921DA4DE497281090CFA50 /* TVImageSize.swift */,
+				3B359A22DC26A76AAAB4E869 /* ProcessInfo+JIT.swift */,
 			);
 			name = Models;
 			path = Models;
@@ -382,6 +395,7 @@
 				3CD7CA8186B964E0258B7953 /* TVGameStateFiles.swift in Sources */,
 				3D73FB46CFD9235C972B05C0 /* TVDisplayResolution.swift in Sources */,
 				B67A08F4223CE19B0495F9AA /* TVImageSize.swift in Sources */,
+				20E2B2EE3533F1AD72D79082 /* ProcessInfo+JIT.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

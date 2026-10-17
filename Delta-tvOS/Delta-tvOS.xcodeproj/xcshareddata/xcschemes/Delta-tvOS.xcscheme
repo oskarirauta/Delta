@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F14FCDE0E5E5E6E6B9DB3D91"
-               BuildableName = "Delta-tvOS.app"
+               BuildableName = "Delta.app"
                BlueprintName = "Delta-tvOS"
-               ReferencedContainer = "container:Delta-tvOS/Delta-tvOS.xcodeproj">
+               ReferencedContainer = "container:Delta-tvOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -27,15 +27,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F14FCDE0E5E5E6E6B9DB3D91"
-            BuildableName = "Delta-tvOS.app"
-            BlueprintName = "Delta-tvOS"
-            ReferencedContainer = "container:Delta-tvOS/Delta-tvOS.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
@@ -76,6 +67,15 @@
             ReferencedContainer = "container:Delta-tvOS/Delta-tvOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F14FCDE0E5E5E6E6B9DB3D91"
+            BuildableName = "Delta-tvOS.app"
+            BlueprintName = "Delta-tvOS"
+            ReferencedContainer = "container:Delta-tvOS/Delta-tvOS.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

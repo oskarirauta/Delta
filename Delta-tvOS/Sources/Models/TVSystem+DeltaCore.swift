@@ -6,6 +6,7 @@ import GBCDeltaCore
 import GBADeltaCore
 import GPGXDeltaCore
 import MelonDSDeltaCore
+import DolphinDeltaCore
 
 extension TVSystem {
     var gameType: GameType { core.gameType }
@@ -19,6 +20,7 @@ extension TVSystem {
         case .gba: return GBA.core
         case .genesis: return GPGX.core
         case .ds: return MelonDS.core
+        case .gamecube: return Dolphin.core
         }
     }
 }

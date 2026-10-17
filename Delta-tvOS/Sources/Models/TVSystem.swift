@@ -8,6 +8,7 @@ enum TVSystem: String, CaseIterable, Identifiable {
     case gba = "GBA"
     case genesis = "Mega Drive"
     case ds = "DS"
+    case gamecube = "GameCube"
     
     var id: String { rawValue }
     
@@ -20,6 +21,7 @@ enum TVSystem: String, CaseIterable, Identifiable {
         case .gba: return "Game Boy Advance"
         case .genesis: return "Sega Mega Drive / Genesis"
         case .ds: return "Nintendo DS"
+        case .gamecube: return "Nintendo GameCube"
         }
     }
     
@@ -47,6 +49,7 @@ enum TVSystem: String, CaseIterable, Identifiable {
         case .gba: return ["gba"]
         case .genesis: return ["gen", "md", "smd", "bin"]
         case .ds: return ["ds", "nds"]
+        case .gamecube: return ["iso", "gcm", "ciso", "rvz", "dol", "elf"]
         }
     }
     
@@ -58,6 +61,7 @@ enum TVSystem: String, CaseIterable, Identifiable {
         case .gbc, .gba: return "gamecontroller"
         case .genesis: return "dpad"
         case .ds: return "rectangle.split.1x2"
+        case .gamecube: return "cube.fill"
         }
     }
 }

@@ -3,6 +3,7 @@ import SwiftUI
 import DeltaCore
 import GameController
 import MelonDSDeltaCore
+import DolphinDeltaCore
 
 class GameEmulatorViewController: GCEventViewController {
     let game: TVGame
@@ -129,6 +130,13 @@ class GameEmulatorViewController: GCEventViewController {
 
         self.emulatorCore = emulator
         emulator.add(self.gameView)
+
+        let jitActive = ProcessInfo.processInfo.isJITActive
+        if let bridge = emulator.deltaCore.emulatorBridge as? MelonDSEmulatorBridge {
+            bridge.isJITEnabled = jitActive
+        } else if let bridge = emulator.deltaCore.emulatorBridge as? DolphinEmulatorBridge {
+            bridge.isJITEnabled = jitActive
+        }
 
         // 3. Connect Game Controllers
         self.connectControllers()
@@ -411,6 +419,29 @@ class GameEmulatorViewController: GCEventViewController {
         alert.addAction(UIAlertAction(title: "Display Resolution: \(displayResolution.title)", style: .default) { [weak self] _ in
             self?.showDisplayResolutionMenu()
         })
+
+        if [.ds, .gamecube].contains(self.game.system) {
+            let jitStatusText: String
+            if !ProcessInfo.processInfo.supportsJIT {
+                jitStatusText = "JIT: Ei tuettu laitteella"
+            } else if !ProcessInfo.processInfo.isDebugging {
+                jitStatusText = "JIT: Ei debuggeria (AltJIT/Xcode)"
+            } else {
+                jitStatusText = ProcessInfo.isJITUserEnabled ? "JIT: Päällä (Aktiivinen)" : "JIT: Pois päältä"
+            }
+            alert.addAction(UIAlertAction(title: jitStatusText, style: .default, handler: { [weak self] _ in
+                if ProcessInfo.processInfo.isJITAvailable {
+                    ProcessInfo.isJITUserEnabled.toggle()
+                    let active = ProcessInfo.processInfo.isJITActive
+                    if let bridge = self?.emulatorCore?.deltaCore.emulatorBridge as? MelonDSEmulatorBridge {
+                        bridge.isJITEnabled = active
+                    } else if let bridge = self?.emulatorCore?.deltaCore.emulatorBridge as? DolphinEmulatorBridge {
+                        bridge.isJITEnabled = active
+                    }
+                }
+                self?.showPauseMenu()
+            }))
+        }
 
         alert.addAction(UIAlertAction(title: "Restart Game", style: .destructive, handler: { [weak self] _ in
             guard let self = self, let emulator = self.emulatorCore else { return }

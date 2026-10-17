@@ -9,6 +9,7 @@ import GBCDeltaCore
 import GBADeltaCore
 import GPGXDeltaCore
 import MelonDSDeltaCore
+import DolphinDeltaCore
 
 /// Represents a physical button or direction on an MFi / Xbox / PlayStation / Switch gamepad
 enum TVGamepadButton: String, CaseIterable, Identifiable, Codable {
@@ -192,6 +193,25 @@ class TVControllerMappingManager: ObservableObject {
                 TVConsoleAction(id: "left", displayName: "D-Pad Left", system: .nes, category: "D-Pad"),
                 TVConsoleAction(id: "right", displayName: "D-Pad Right", system: .nes, category: "D-Pad")
             ]
+        case .gamecube:
+            return [
+                TVConsoleAction(id: "a", displayName: "A Button", system: .gamecube, category: "Action Buttons"),
+                TVConsoleAction(id: "b", displayName: "B Button", system: .gamecube, category: "Action Buttons"),
+                TVConsoleAction(id: "x", displayName: "X Button", system: .gamecube, category: "Action Buttons"),
+                TVConsoleAction(id: "y", displayName: "Y Button", system: .gamecube, category: "Action Buttons"),
+                TVConsoleAction(id: "start", displayName: "Start Button", system: .gamecube, category: "Menu Buttons"),
+                TVConsoleAction(id: "z", displayName: "Z Button", system: .gamecube, category: "Triggers"),
+                TVConsoleAction(id: "l", displayName: "L Trigger", system: .gamecube, category: "Triggers"),
+                TVConsoleAction(id: "r", displayName: "R Trigger", system: .gamecube, category: "Triggers"),
+                TVConsoleAction(id: "cStickUp", displayName: "C-Stick Up", system: .gamecube, category: "C-Stick"),
+                TVConsoleAction(id: "cStickDown", displayName: "C-Stick Down", system: .gamecube, category: "C-Stick"),
+                TVConsoleAction(id: "cStickLeft", displayName: "C-Stick Left", system: .gamecube, category: "C-Stick"),
+                TVConsoleAction(id: "cStickRight", displayName: "C-Stick Right", system: .gamecube, category: "C-Stick"),
+                TVConsoleAction(id: "up", displayName: "D-Pad Up", system: .gamecube, category: "D-Pad"),
+                TVConsoleAction(id: "down", displayName: "D-Pad Down", system: .gamecube, category: "D-Pad"),
+                TVConsoleAction(id: "left", displayName: "D-Pad Left", system: .gamecube, category: "D-Pad"),
+                TVConsoleAction(id: "right", displayName: "D-Pad Right", system: .gamecube, category: "D-Pad")
+            ]
         }
     }
     
@@ -252,6 +272,25 @@ class TVControllerMappingManager: ObservableObject {
                 "b": .b,
                 "start": .start,
                 "select": .select,
+                "up": .up,
+                "down": .down,
+                "left": .left,
+                "right": .right
+            ]
+        case .gamecube:
+            return [
+                "a": .a,
+                "b": .b,
+                "x": .x,
+                "y": .y,
+                "start": .start,
+                "z": .rightShoulder,
+                "l": .leftTrigger,
+                "r": .rightTrigger,
+                "cStickUp": .rightThumbstickUp,
+                "cStickDown": .rightThumbstickDown,
+                "cStickLeft": .rightThumbstickLeft,
+                "cStickRight": .rightThumbstickRight,
                 "up": .up,
                 "down": .down,
                 "left": .left,
@@ -424,6 +463,12 @@ class TVControllerMappingManager: ObservableObject {
             deltaMapping.set(N64GameInput.analogStickDown, forControllerInput: MFiGameController.Input.leftThumbstickDown)
             deltaMapping.set(N64GameInput.analogStickLeft, forControllerInput: MFiGameController.Input.leftThumbstickLeft)
             deltaMapping.set(N64GameInput.analogStickRight, forControllerInput: MFiGameController.Input.leftThumbstickRight)
+        } else if system == .gamecube {
+            // Main control stick maps directly from left thumbstick
+            deltaMapping.set(GameCubeGameInput.controlStickUp, forControllerInput: MFiGameController.Input.leftThumbstickUp)
+            deltaMapping.set(GameCubeGameInput.controlStickDown, forControllerInput: MFiGameController.Input.leftThumbstickDown)
+            deltaMapping.set(GameCubeGameInput.controlStickLeft, forControllerInput: MFiGameController.Input.leftThumbstickLeft)
+            deltaMapping.set(GameCubeGameInput.controlStickRight, forControllerInput: MFiGameController.Input.leftThumbstickRight)
         } else {
             for (direction, physical) in [("up", MFiGameController.Input.leftThumbstickUp),
                                           ("down", .leftThumbstickDown), ("left", .leftThumbstickLeft), ("right", .leftThumbstickRight)] {
