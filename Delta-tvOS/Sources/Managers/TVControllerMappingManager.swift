@@ -31,6 +31,8 @@ enum TVGamepadButton: String, CaseIterable, Identifiable, Codable {
     case rightThumbstickDown = "rightThumbstickDown"
     case rightThumbstickLeft = "rightThumbstickLeft"
     case rightThumbstickRight = "rightThumbstickRight"
+    case l3 = "leftThumbstickButton"
+    case r3 = "rightThumbstickButton"
     
     func value(in pad: GCExtendedGamepad) -> Float {
         switch self {
@@ -53,6 +55,8 @@ enum TVGamepadButton: String, CaseIterable, Identifiable, Codable {
         case .rightThumbstickDown: return pad.rightThumbstick.down.value
         case .rightThumbstickLeft: return pad.rightThumbstick.left.value
         case .rightThumbstickRight: return pad.rightThumbstick.right.value
+        case .l3: return pad.leftThumbstickButton?.value ?? 0
+        case .r3: return pad.rightThumbstickButton?.value ?? 0
         }
     }
 
@@ -79,6 +83,8 @@ enum TVGamepadButton: String, CaseIterable, Identifiable, Codable {
         case .rightThumbstickDown: return "Right Stick Down"
         case .rightThumbstickLeft: return "Right Stick Left"
         case .rightThumbstickRight: return "Right Stick Right"
+        case .l3: return "L3 (Vasen Tatti)"
+        case .r3: return "R3 (Oikea Tatti)"
         }
     }
 }
@@ -326,7 +332,9 @@ class TVControllerMappingManager: ObservableObject {
                     (.rightThumbstickUp, pad.rightThumbstick.up),
                     (.rightThumbstickDown, pad.rightThumbstick.down),
                     (.rightThumbstickLeft, pad.rightThumbstick.left),
-                    (.rightThumbstickRight, pad.rightThumbstick.right)
+                    (.rightThumbstickRight, pad.rightThumbstick.right),
+                    (.l3, pad.leftThumbstickButton),
+                    (.r3, pad.rightThumbstickButton)
                 ]
                 for (button, input) in buttons where (input?.value ?? 0) > 0.5 {
                     result.append(("\(ObjectIdentifier(controller))-\(button.rawValue)", button))

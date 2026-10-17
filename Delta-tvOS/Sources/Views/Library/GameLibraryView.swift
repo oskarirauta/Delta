@@ -8,7 +8,7 @@ struct GameLibraryView: View {
     
     @State private var selectedSystem: TVSystem? = nil
     @State private var selectedGame: TVGame? = nil
-    @State private var hasConnectedController = false
+    @State private var connectedControllerCount = 0
     @State private var controllerBadgeFlash = false
     @State private var showUploadInfo = false
     
@@ -42,7 +42,7 @@ struct GameLibraryView: View {
                     Spacer()
                     
                     // Controller Remapping Tool Button in Header
-                    if hasConnectedController {
+                    if connectedControllerCount > 0 {
                         HeaderRemapButton {
                             self.presentControllerRemapper()
                         }
@@ -50,21 +50,21 @@ struct GameLibraryView: View {
                     
                     // Controller Status Indicator with Flash Transition
                     HStack(spacing: 10) {
-                        Image(systemName: hasConnectedController ? "gamecontroller.fill" : "gamecontroller")
-                            .foregroundColor(controllerBadgeFlash ? .black : (hasConnectedController ? .green : .yellow))
-                        Text(hasConnectedController ? "Controller Connected" : "Connect a Controller")
+                        Image(systemName: connectedControllerCount > 0 ? "gamecontroller.fill" : "gamecontroller")
+                            .foregroundColor(controllerBadgeFlash ? .black : (connectedControllerCount > 0 ? .green : .yellow))
+                        Text(connectedControllerCount > 0 ? (connectedControllerCount == 1 ? "1 Ohjain (P1)" : "\(connectedControllerCount) Ohjainta (P1–P\(connectedControllerCount))") : "Liitä ohjain")
                             .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(controllerBadgeFlash ? .black : (hasConnectedController ? .green : .yellow))
+                            .foregroundColor(controllerBadgeFlash ? .black : (connectedControllerCount > 0 ? .green : .yellow))
                     }
                     .padding(.horizontal, 18)
                     .padding(.vertical, 10)
                     .background(
-                        controllerBadgeFlash ? Color.white : (hasConnectedController ? Color.green.opacity(0.18) : Color.white.opacity(0.08))
+                        controllerBadgeFlash ? Color.white : (connectedControllerCount > 0 ? Color.green.opacity(0.18) : Color.white.opacity(0.08))
                     )
                     .clipShape(Capsule())
                     .overlay(
                         Capsule()
-                            .stroke(controllerBadgeFlash ? Color.white : (hasConnectedController ? Color.green.opacity(0.6) : Color.clear), lineWidth: 2)
+                            .stroke(controllerBadgeFlash ? Color.white : (connectedControllerCount > 0 ? Color.green.opacity(0.6) : Color.clear), lineWidth: 2)
                     )
                     .scaleEffect(controllerBadgeFlash ? 1.12 : 1.0)
                     .shadow(color: controllerBadgeFlash ? Color.white.opacity(0.8) : Color.clear, radius: 12)
@@ -160,11 +160,11 @@ struct GameLibraryView: View {
     }
     
     private func checkControllers() {
-        let isConnected = GCController.controllers().contains(where: { $0.extendedGamepad != nil })
-        if isConnected && !self.hasConnectedController {
+        let count = GCController.controllers().filter { $0.extendedGamepad != nil }.count
+        if count > 0 && self.connectedControllerCount == 0 {
             withAnimation(.spring(response: 0.25, dampingFraction: 0.5)) {
                 self.controllerBadgeFlash = true
-                self.hasConnectedController = true
+                self.connectedControllerCount = count
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                 withAnimation(.easeInOut(duration: 0.35)) {
@@ -173,7 +173,7 @@ struct GameLibraryView: View {
             }
         } else {
             withAnimation(.easeInOut(duration: 0.25)) {
-                self.hasConnectedController = isConnected
+                self.connectedControllerCount = count
             }
         }
     }
