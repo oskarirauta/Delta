@@ -269,8 +269,9 @@ class GameViewController: DeltaCore.GameViewController
     {
         self.delegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateControllers), name: .externalGameControllerDidConnect, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateControllers), name: .externalGameControllerDidDisconnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateControllers), name: .deltaControllerDidConnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateControllers), name: .deltaControllerDidDisconnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.updateControllers), name: .deltaControllerAssignmentDidChange, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(GameViewController.didEnterBackground(with:)), name: UIApplication.didEnterBackgroundNotification, object: UIApplication.shared)
         
@@ -752,7 +753,9 @@ extension GameViewController
             
             do
             {
-                try emulatorCore.load(saveState)
+                if (saveState as? SaveState)?.isCompatibleCore(with: emulatorCore.deltaCore) != false {
+                    try emulatorCore.load(saveState)
+                }
             }
             catch
             {
@@ -825,12 +828,12 @@ private extension GameViewController
 {
     @objc func updateControllers()
     {
-        let firstActiveController = ExternalGameControllerManager.shared.connectedControllers.first(where: { $0.playerIndex != nil })
+        let firstActiveController = GameControllerRegistry.shared.connectedControllers.first(where: { $0.playerIndex != nil })
         if firstActiveController == nil && Settings.localControllerPlayerIndex == nil
         {
             Settings.localControllerPlayerIndex = 0
         }
-        else if let index = Settings.localControllerPlayerIndex, ExternalGameControllerManager.shared.connectedControllers.contains(where: { $0.playerIndex == index })
+        else if let index = Settings.localControllerPlayerIndex, GameControllerRegistry.shared.connectedControllers.contains(where: { $0.playerIndex == index })
         {
             // There is an active controller with same player index as local controller, so disable local controller.
             Settings.localControllerPlayerIndex = nil
@@ -873,7 +876,7 @@ private extension GameViewController
         // Roundabout way of combining arrays to prevent rare runtime crash in + operator :(
         var controllers = [GameController]()
         controllers.append(self.controllerView)
-        controllers.append(contentsOf: ExternalGameControllerManager.shared.connectedControllers)
+        controllers.append(contentsOf: GameControllerRegistry.shared.connectedControllers)
         
         if let emulatorCore = self.emulatorCore, let game = self.game
         {
@@ -927,7 +930,7 @@ private extension GameViewController
         guard let game = self.game as? Game, let window = self.view.window else { return }
         
         let traits = DeltaCore.ControllerSkin.Traits.defaults(for: window)
-        let isExternalControllerConnected = ExternalGameControllerManager.shared.connectedControllers.contains(where: { $0.playerIndex != nil })
+        let isExternalControllerConnected = GameControllerRegistry.shared.connectedControllers.contains(where: { $0.playerIndex != nil })
         
         if Settings.localControllerPlayerIndex != nil
         {
@@ -1158,7 +1161,7 @@ extension GameViewController: SaveStatesViewControllerDelegate
             
             let game = backgroundContext.object(with: game.objectID) as! Game
             
-            let fetchRequest = SaveState.fetchRequest(for: game, type: .auto)
+            let fetchRequest = SaveState.fetchRequest(for: game, type: .auto, core: emulatorCore.deltaCore)
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
             
             do
@@ -1254,6 +1257,15 @@ extension GameViewController: SaveStatesViewControllerDelegate
     
     private func load(_ saveState: SaveStateProtocol)
     {
+        if let stored = saveState as? SaveState, let game = self.game as? Game,
+           !SaveState.corePredicate(for: game, coreIdentifier: self.emulatorCore?.deltaCore.identifier).evaluate(with: stored)
+        {
+            let alert = UIAlertController(title: NSLocalizedString("Incompatible Save State", comment: ""),
+                                          message: NSLocalizedString("This save state belongs to a different GBA core. Select that core in Settings to load it.", comment: ""), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
+            self.present(alert, animated: true)
+            return
+        }
         let isRunning = (self.emulatorCore?.state == .running)
         
         if isRunning
@@ -1435,7 +1447,7 @@ extension GameViewController
         backgroundContext.performAndWait {
             
             let game = backgroundContext.object(with: game.objectID) as! Game
-            let fetchRequest = SaveState.fetchRequest(for: game, type: .quick)
+            let fetchRequest = SaveState.fetchRequest(for: game, type: .quick, core: emulatorCore.deltaCore)
             
             do
             {
@@ -1470,7 +1482,7 @@ extension GameViewController
         
         guard let game = self.game as? Game, let emulatorCore, !emulatorCore.isWirelessMultiplayerActive else { return }
         
-        let fetchRequest = SaveState.fetchRequest(for: game, type: .quick)
+        let fetchRequest = SaveState.fetchRequest(for: game, type: .quick, core: emulatorCore.deltaCore)
         
         do
         {

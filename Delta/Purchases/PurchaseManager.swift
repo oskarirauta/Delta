@@ -12,6 +12,14 @@ import DeltaFeatures
 
 extension PurchaseManager
 {
+    static var isPersonalBuild: Bool {
+        #if DELTA_PERSONAL_BUILD
+        return true
+        #else
+        return false
+        #endif
+    }
+
     static let friendZoneSubscriptionGroupID = "21579960"
 }
 
@@ -20,6 +28,7 @@ class PurchaseManager
     static let shared = PurchaseManager()
     
     var supportsExternalPurchases: Bool {
+        guard !Self.isPersonalBuild else { return false }
         guard !UserDefaults.standard.isExternalPurchaseLinkDisabled else { return false }
         return _supportsExternalPurchases
     }
@@ -32,6 +41,7 @@ class PurchaseManager
     @available(iOS 17.5, *) // iOS 17.5 is earliest version that supports reporting purchases via Apple's External Purchase Server API.
     func prepare() async
     {
+        guard !Self.isPersonalBuild else { return }
         #if APP_STORE
         
         if let storeCountryCode = await Storefront.current?.countryCode, storeCountryCode == "USA"
@@ -89,7 +99,7 @@ extension PurchaseManager
     
     @MainActor
     var isExperimentalFeaturesAvailable: Bool {
-        #if BETA
+        #if BETA || DELTA_PERSONAL_BUILD
         // Experimental features are always available in BETA version.
         return true
         #elseif LEGACY
@@ -116,6 +126,7 @@ extension PurchaseManager
     
     @MainActor
     var supportsExperimentalFeatures: Bool {
+        if Self.isPersonalBuild { return true }
         #if APP_STORE
         // We support Experimental Features if external purchases are supported.
         return self.supportsExternalPurchases
@@ -127,7 +138,7 @@ extension PurchaseManager
     
     @MainActor
     var isPatronIconsAvailable: Bool {
-        #if BETA
+        #if BETA || DELTA_PERSONAL_BUILD
         // Patron icons are always available in BETA version.
         return true
         #elseif LEGACY

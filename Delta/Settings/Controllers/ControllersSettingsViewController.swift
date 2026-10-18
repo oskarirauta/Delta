@@ -55,6 +55,7 @@ class ControllersSettingsViewController: UITableViewController
     
     private var gameController: GameController? {
         didSet {
+            defer { GameControllerRegistry.shared.assignmentDidChange() }
             // Order matters since localDeviceController changes Settings.localControllerPlayerIndex, which sends out NSNotification.
             if oldValue == self.localDeviceController
             {
@@ -64,7 +65,7 @@ class ControllersSettingsViewController: UITableViewController
             else
             {
                 // Ensure it's still a discovered controller, or else it might crash when setting player index.
-                if ExternalGameControllerManager.shared.connectedControllers.contains(where: { $0 === oldValue })
+                if GameControllerRegistry.shared.connectedControllers.contains(where: { $0 === oldValue })
                 {
                     oldValue?.playerIndex = nil
                 }
@@ -74,7 +75,7 @@ class ControllersSettingsViewController: UITableViewController
         }
     }
     
-    private var connectedControllers = ExternalGameControllerManager.shared.connectedControllers.sorted(by: { $0.playerIndex ?? NSIntegerMax < $1.playerIndex ?? NSIntegerMax })
+    private var connectedControllers = GameControllerRegistry.shared.connectedControllers.sorted(by: { $0.playerIndex ?? NSIntegerMax < $1.playerIndex ?? NSIntegerMax })
     
     private lazy var localDeviceController: LocalDeviceController = {
         let device = LocalDeviceController()
@@ -87,13 +88,14 @@ class ControllersSettingsViewController: UITableViewController
     {
         super.init(coder: aDecoder)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ControllersSettingsViewController.externalGameControllerDidConnect(_:)), name: .externalGameControllerDidConnect, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ControllersSettingsViewController.externalGameControllerDidDisconnect(_:)), name: .externalGameControllerDidDisconnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ControllersSettingsViewController.externalGameControllerDidConnect(_:)), name: .deltaControllerDidConnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ControllersSettingsViewController.externalGameControllerDidDisconnect(_:)), name: .deltaControllerDidDisconnect, object: nil)
     }
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Switch 2", style: .plain, target: self, action: #selector(showSwitch2Controllers))
         
         let gameControllers = [self.localDeviceController as GameController] + self.connectedControllers
         for gameController in gameControllers
@@ -105,6 +107,10 @@ class ControllersSettingsViewController: UITableViewController
             }
         }
     }
+    @objc private func showSwitch2Controllers() {
+        navigationController?.pushViewController(UIHostingController(rootView: Switch2ControllersView()), animated: true)
+    }
+
 }
 
 extension ControllersSettingsViewController

@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         self.updateSettings()
         
         // Controllers
-        ExternalGameControllerManager.shared.startMonitoring()
+        GameControllerRegistry.shared.startMonitoring()
         
         // JIT
         ServerManager.shared.prepare()
@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         guard DatabaseManager.shared.isStarted else { return }
-        PatreonAPI.shared.refreshPatreonAccount()
+        if !PurchaseManager.isPersonalBuild { PatreonAPI.shared.refreshPatreonAccount() }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication)

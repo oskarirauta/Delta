@@ -43,4 +43,6 @@
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
+   <FileRef location="group:Cores/PlayDeltaCore/PlayDeltaCore.xcodeproj"></FileRef>
+   <FileRef location="group:Cores/MGBADeltaCore/MGBADeltaCore.xcodeproj"></FileRef>
 </Workspace>

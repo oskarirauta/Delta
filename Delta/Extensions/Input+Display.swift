@@ -125,8 +125,10 @@ extension Input
             case .y: return NSLocalizedString("Y", comment: "")
             case .leftShoulder: return NSLocalizedString("L1", comment: "")
             case .leftTrigger: return NSLocalizedString("L2", comment: "")
+            case .leftThumbstickButton: return NSLocalizedString("L3", comment: "")
             case .rightShoulder: return NSLocalizedString("R1", comment: "")
             case .rightTrigger: return NSLocalizedString("R2", comment: "")
+            case .rightThumbstickButton: return NSLocalizedString("R3", comment: "")
             case .start: return NSLocalizedString("Start", comment: "")
             case .select: return NSLocalizedString("Select", comment: "")
             }
@@ -245,8 +247,10 @@ extension Input
             case .y: return NSLocalizedString("Y Button", comment: "")
             case .leftShoulder: return NSLocalizedString("L1 Button", comment: "")
             case .leftTrigger: return NSLocalizedString("L2 Button", comment: "")
+            case .leftThumbstickButton: return NSLocalizedString("L3 Button", comment: "")
             case .rightShoulder: return NSLocalizedString("R1 Button", comment: "")
             case .rightTrigger: return NSLocalizedString("R2 Button", comment: "")
+            case .rightThumbstickButton: return NSLocalizedString("R3 Button", comment: "")
             case .start: return NSLocalizedString("Start", comment: "")
             case .select: return NSLocalizedString("Select", comment: "")
             }
@@ -376,8 +380,10 @@ extension Input
             case .y: return "y.circle"
             case .leftShoulder: return "l1.button.roundedbottom.horizontal"
             case .leftTrigger: return "l2.button.roundedtop.horizontal"
+            case .leftThumbstickButton: return "l.joystick.press.down"
             case .rightShoulder: return "r1.button.roundedbottom.horizontal"
             case .rightTrigger: return "r2.button.roundedtop.horizontal"
+            case .rightThumbstickButton: return "r.joystick.press.down"
             case .start: return "plus.circle"
             case .select: return "minus.circle"
             }

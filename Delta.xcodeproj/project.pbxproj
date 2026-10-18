@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -32,9 +32,13 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		082A3EFFDCAD4AD49A322D1A /* Switch2ControllersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61EAE004BB4412A4D522D0 /* Switch2ControllersView.swift */; };
 		18FC614F90FE76140AAECE67 /* DeltaOperatorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBF2F877CA6072880A54F35 /* DeltaOperatorUtils.swift */; };
 		1FA4ABA79AB72914FE414A61 /* libPods-Delta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC866E433B3BA9AE18ABA1EC /* libPods-Delta.a */; };
+		2011C70FF6F74C4FBC5D9A40 /* MGBADeltaCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32571F9401FB4339A4675DA7 /* MGBADeltaCore.framework */; };
+		2551009CA82D4362B597DE61 /* MGBADeltaCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 32571F9401FB4339A4675DA7 /* MGBADeltaCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		28B653353E8323FA65C54A42 /* OperatorUICoordinators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8C13CE90324CBBA76BC3E /* OperatorUICoordinators.swift */; };
+		31F18F1A99024730B5BD9922 /* Switch2GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7A0D41279D4201820788AF /* Switch2GameController.swift */; };
 		3C42B866777FEA42CD529B95 /* OperatorKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 796FA895EF62DF6A509DCA55 /* OperatorKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C9DD6C0CC4DC2F8F032ED35 /* AppDelegate+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7C8DB38D2A6B16B8609EAC /* AppDelegate+Operator.swift */; };
 		4F501EDE15C52E1E6230DB9E /* DeltaOperatorGameObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4327597BCB33E196164D3BB6 /* DeltaOperatorGameObserver.swift */; };
@@ -187,6 +191,8 @@
 		BFFC46231D5984A000AF2CC6 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFC46221D5984A000AF2CC6 /* LaunchViewController.swift */; };
 		BFFC46461D59861000AF2CC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFFC46441D59861000AF2CC6 /* LaunchScreen.storyboard */; };
 		BFFC464C1D5998D600AF2CC6 /* CheatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFC464B1D5998D600AF2CC6 /* CheatTableViewCell.swift */; };
+		C14DD5331CCD42DFB5CDFBCD /* Switch2InputMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6331C7B02D60404888A2EED1 /* Switch2InputMapping.swift */; };
+		C178699A87844B7B871CEBBD /* Switch2ControllerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F262FF46B6FD4535A4ADEC5C /* Switch2ControllerService.swift */; };
 		C6F24AD72D64B452002F939F /* Lu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F24AD62D64B452002F939F /* Lu.swift */; };
 		C6F24AD92D64B550002F939F /* PauseViewController+Lu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F24AD82D64B550002F939F /* PauseViewController+Lu.swift */; };
 		C6F24ADB2D64B5A0002F939F /* Lu-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6F24ADA2D64B5A0002F939F /* Lu-Info.plist */; };
@@ -363,6 +369,8 @@
 		E6BD34AB2F563F1A001C9D78 /* AchievementGreeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BD34AA2F563F1A001C9D78 /* AchievementGreeting.swift */; };
 		E6BD34AD2F587BF0001C9D78 /* AchievementGameBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BD34AC2F587BF0001C9D78 /* AchievementGameBanner.swift */; };
 		E6EB10AF2F58B1C50001AAD2 /* AchievementNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EB10AE2F58B1C50001AAD2 /* AchievementNotification.swift */; };
+		E805F04B35BB439283BE01B1 /* GameControllerRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB1011B27624876A3715C5C /* GameControllerRegistry.swift */; };
+		F29965983EA0445F9CD511CC /* Switch2Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 997D83C737FE40429DEAF52D /* Switch2Kit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -583,6 +591,7 @@
 				D5C7DD132E26CF6F0048FF5C /* N64DeltaCore_RSP.framework in Embed Frameworks */,
 				D5C7DD082E26CF540048FF5C /* SNESDeltaCore.framework in Embed Frameworks */,
 				3C42B866777FEA42CD529B95 /* OperatorKit.xcframework in Embed Frameworks */,
+				2551009CA82D4362B597DE61 /* MGBADeltaCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -603,7 +612,9 @@
 		0B6FDC5A03AD5693BEFFE87C /* GamesViewController+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GamesViewController+Operator.swift"; sourceTree = "<group>"; };
 		2157B527EA676AA703BEBF02 /* DeltaOperatorFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaOperatorFacade.swift; sourceTree = "<group>"; };
 		22506DA00971C4300AF90A35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32571F9401FB4339A4675DA7 /* MGBADeltaCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MGBADeltaCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4327597BCB33E196164D3BB6 /* DeltaOperatorGameObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaOperatorGameObserver.swift; sourceTree = "<group>"; };
+		6331C7B02D60404888A2EED1 /* Switch2InputMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Switch2InputMapping.swift; path = Integrations/Switch2Kit/Adapter/Switch2InputMapping.swift; sourceTree = SOURCE_ROOT; };
 		796FA895EF62DF6A509DCA55 /* OperatorKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OperatorKit.xcframework; sourceTree = "<group>"; };
 		7C31F852121CBEF08181BD23 /* OperatorStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorStatusView.swift; sourceTree = "<group>"; };
 		7E3E5A45AB20C8A87754453B /* libPods-DeltaPreviews.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DeltaPreviews.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -622,6 +633,7 @@
 		82C63BDA2E57BB4700B0C812 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		82C83A722E4FCC030020711E /* CoreSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreSettingsView.swift; sourceTree = "<group>"; };
 		82F450AA2E6A1CD00097CE1C /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		8AB1011B27624876A3715C5C /* GameControllerRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameControllerRegistry.swift; path = Integrations/Switch2Kit/Adapter/GameControllerRegistry.swift; sourceTree = SOURCE_ROOT; };
 		8ECE6641DE30D01EA30FE7F6 /* Pods-DeltaPreviews.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeltaPreviews.release.xcconfig"; path = "Pods/Target Support Files/Pods-DeltaPreviews/Pods-DeltaPreviews.release.xcconfig"; sourceTree = "<group>"; };
 		9D171C53E58A0B9BAF0B89D5 /* GameCollectionViewController+Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameCollectionViewController+Operator.swift"; sourceTree = "<group>"; };
 		A01281C7023C0041B25963BE /* Pods-DeltaPreviews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeltaPreviews.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DeltaPreviews/Pods-DeltaPreviews.debug.xcconfig"; sourceTree = "<group>"; };
@@ -945,7 +957,10 @@
 		E6BD34AA2F563F1A001C9D78 /* AchievementGreeting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementGreeting.swift; sourceTree = "<group>"; };
 		E6BD34AC2F587BF0001C9D78 /* AchievementGameBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementGameBanner.swift; sourceTree = "<group>"; };
 		E6EB10AE2F58B1C50001AAD2 /* AchievementNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementNotification.swift; sourceTree = "<group>"; };
+		EF61EAE004BB4412A4D522D0 /* Switch2ControllersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Switch2ControllersView.swift; path = Integrations/Switch2Kit/Adapter/Switch2ControllersView.swift; sourceTree = SOURCE_ROOT; };
+		F262FF46B6FD4535A4ADEC5C /* Switch2ControllerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Switch2ControllerService.swift; path = Integrations/Switch2Kit/Adapter/Switch2ControllerService.swift; sourceTree = SOURCE_ROOT; };
 		FCE7674E5643CDB43BC8ED32 /* DeltaOperatorWritebackToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeltaOperatorWritebackToast.swift; sourceTree = "<group>"; };
+		FE7A0D41279D4201820788AF /* Switch2GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Switch2GameController.swift; path = Integrations/Switch2Kit/Adapter/Switch2GameController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -976,6 +991,8 @@
 				D5C7DD192E26CF810048FF5C /* MelonDSDeltaCore.framework in Frameworks */,
 				D5C45FEF2BE992A80009DBB0 /* AltKit in Frameworks */,
 				70FF20879DA0DCEE53D8CAED /* OperatorKit.xcframework in Frameworks */,
+				F29965983EA0445F9CD511CC /* Switch2Kit in Frameworks */,
+				2011C70FF6F74C4FBC5D9A40 /* MGBADeltaCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,6 +1546,12 @@
 				BFFA71D81AAC406100EE9DD1 /* Products */,
 				FD1E8AE87FA2DB8793F7B937 /* Pods */,
 				43183841AF258C4DC1FAC9AB /* DeltaOperator */,
+				6331C7B02D60404888A2EED1 /* Switch2InputMapping.swift */,
+				8AB1011B27624876A3715C5C /* GameControllerRegistry.swift */,
+				EF61EAE004BB4412A4D522D0 /* Switch2ControllersView.swift */,
+				F262FF46B6FD4535A4ADEC5C /* Switch2ControllerService.swift */,
+				FE7A0D41279D4201820788AF /* Switch2GameController.swift */,
+				32571F9401FB4339A4675DA7 /* MGBADeltaCore.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2045,6 +2068,7 @@
 				D5E76AAC2BE199890078C0C5 /* ShowTouches */,
 				D52CB8C52CE2B7B600B04458 /* RevenueCat */,
 				D5EF1A1F2D84BD59001B06E6 /* rcheevos */,
+				997D83C737FE40429DEAF52D /* Switch2Kit */,
 			);
 			productName = Delta;
 			productReference = BFFA71D71AAC406100EE9DD1 /* Delta.app */;
@@ -2100,16 +2124,17 @@
 				TargetAttributes = {
 					BF14D8941DE7A512002CA1BE = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 6XVY5G3U44;
+						DevelopmentTeam = LBFBZP3Z4J;
 						ProvisioningStyle = Automatic;
 					};
 					BF6E70B925D2187800E41CD1 = {
 						CreatedOnToolsVersion = 12.5;
-						DevelopmentTeam = 6XVY5G3U44;
+						DevelopmentTeam = LBFBZP3Z4J;
 						ProvisioningStyle = Automatic;
 					};
 					BFFA71D61AAC406100EE9DD1 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = LBFBZP3Z4J;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -2120,9 +2145,13 @@
 					};
 					D539102E29E88B6B0006B350 = {
 						CreatedOnToolsVersion = 14.3;
+						DevelopmentTeam = LBFBZP3Z4J;
+						ProvisioningStyle = Automatic;
 					};
 					D5D7C1F029E60DFF00663793 = {
 						CreatedOnToolsVersion = 14.2;
+						DevelopmentTeam = LBFBZP3Z4J;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -2142,6 +2171,7 @@
 				D5E76AAB2BE199890078C0C5 /* XCRemoteSwiftPackageReference "ShowTouches" */,
 				D52CB8C42CE2B7B600B04458 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 				D5EF1A1E2D84BD59001B06E6 /* XCRemoteSwiftPackageReference "rcheevos" */,
+				4A39C30267174F4CACD4DF9C /* XCLocalSwiftPackageReference "Integrations/Switch2Kit" */,
 			);
 			productRefGroup = BFFA71D81AAC406100EE9DD1 /* Products */;
 			projectDirPath = "";
@@ -2723,6 +2753,11 @@
 				CA00010A2E6000010000000A /* SkinSettingsView.swift in Sources */,
 				CA00010D2E6000010000000D /* AudioSettingsView.swift in Sources */,
 				CA0001102E60000100000010 /* VideoSettingsView.swift in Sources */,
+				082A3EFFDCAD4AD49A322D1A /* Switch2ControllersView.swift in Sources */,
+				31F18F1A99024730B5BD9922 /* Switch2GameController.swift in Sources */,
+				C14DD5331CCD42DFB5CDFBCD /* Switch2InputMapping.swift in Sources */,
+				C178699A87844B7B871CEBBD /* Switch2ControllerService.swift in Sources */,
+				E805F04B35BB439283BE01B1 /* GameControllerRegistry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2871,7 +2906,7 @@
 		BF14D8951DE7A512002CA1BE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 6XVY5G3U44;
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2879,7 +2914,7 @@
 		BF14D8961DE7A512002CA1BE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 6XVY5G3U44;
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2888,7 +2923,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6XVY5G3U44;
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2897,7 +2932,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6XVY5G3U44;
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2933,6 +2968,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 163;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2957,7 +2993,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DGLES_SILENCE_DEPRECATION";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.oskarirauta;
 				PRODUCT_NAME = Delta;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2995,6 +3031,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 163;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3012,7 +3049,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DGLES_SILENCE_DEPRECATION";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.oskarirauta;
 				PRODUCT_NAME = Delta;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -3033,9 +3070,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6XVY5G3U44;
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3079,12 +3117,12 @@
 					"\"AuthenticationServices\"",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.oskarirauta;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = "non-global";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = BETA;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "BETA DELTA_PERSONAL_BUILD";
 				SWIFT_INCLUDE_PATHS = "$(inherited) \"$(SRCROOT)/Cores/GPGXDeltaCore/Sources/GPGXBridge\"";
 				SWIFT_OBJC_BRIDGING_HEADER = "Delta/Supporting Files/Delta-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3105,19 +3143,21 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6XVY5G3U44;
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				INFOPLIST_FILE = "Delta/Supporting Files/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -DIMPACTOR";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Delta.oskarirauta;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = "non-global";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DELTA_PERSONAL_BUILD;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_INCLUDE_PATHS = "$(inherited) \"$(SRCROOT)/Cores/GPGXDeltaCore/Sources/GPGXBridge\"";
 				SWIFT_OBJC_BRIDGING_HEADER = "Delta/Supporting Files/Delta-Bridging-Header.h";
@@ -3144,7 +3184,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -3153,7 +3193,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Riley Testut. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3192,7 +3232,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -3201,7 +3241,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Riley Testut. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3234,7 +3274,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 6XVY5G3U44;
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -3258,7 +3298,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6XVY5G3U44;
+				DEVELOPMENT_TEAM = LBFBZP3Z4J;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -3328,6 +3368,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		4A39C30267174F4CACD4DF9C /* XCLocalSwiftPackageReference "Integrations/Switch2Kit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Integrations/Switch2Kit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		D52CB8C42CE2B7B600B04458 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -3372,6 +3419,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		997D83C737FE40429DEAF52D /* Switch2Kit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A39C30267174F4CACD4DF9C /* XCLocalSwiftPackageReference "Integrations/Switch2Kit" */;
+			productName = Switch2Kit;
+		};
 		D52CB8C52CE2B7B600B04458 /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D52CB8C42CE2B7B600B04458 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;

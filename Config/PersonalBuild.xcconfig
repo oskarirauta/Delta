@@ -1,0 +1,3 @@
+// Opt-in local features. Pass with xcodebuild -xcconfig Config/PersonalBuild.xcconfig.
+// Ordinary builds and Patreon account membership remain unchanged.
+OTHER_SWIFT_FLAGS = $(inherited) -DDELTA_PERSONAL_BUILD

@@ -44,7 +44,7 @@ extension WhatsNewCollectionViewCell
         self.captionLabel.text = feature.caption
         self.imageView.image = feature.image
         
-        if feature.isPatronExclusive
+        if feature.isPatronExclusive && !PurchaseManager.isPersonalBuild
         {
             self.patronsLabel.isHidden = false
             self.stackView.backgroundColor = .clear

@@ -322,7 +322,8 @@ extension GameCollectionViewController
                 emulatorBridge.wfcDNS = Settings.preferredWFCServer
             }
             
-            if let saveState = self.activeSaveState /* && self.isResumingGame */ // activeSaveState can be non-nil even when not resuming game.
+            if let saveState = self.activeSaveState,
+               destinationViewController.emulatorCore.map({ (saveState as? SaveState)?.isCompatibleCore(with: $0.deltaCore) != false }) == true /* && self.isResumingGame */ // activeSaveState can be non-nil even when not resuming game.
             {
                 // Must be synchronous or else there will be a flash of black
                 destinationViewController.emulatorCore?.start()
@@ -372,7 +373,9 @@ extension GameCollectionViewController
         if let activeEmulatorCore = self.activeEmulatorCore, !activeEmulatorCore.isWirelessMultiplayerActive
         {
             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
-            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                                NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue),
+                                SaveState.corePredicate(for: game, coreIdentifier: activeEmulatorCore.deltaCore.gameType == game.type ? activeEmulatorCore.deltaCore.identifier : nil)])
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
             
             do
@@ -609,7 +612,9 @@ private extension GameCollectionViewController
                         if let activeEmulatorCore = self.activeEmulatorCore, !activeEmulatorCore.isWirelessMultiplayerActive
                         {
                             let fetchRequest = SaveState.rst_fetchRequest() as! NSFetchRequest<SaveState>
-                            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue)
+                            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                                NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), SaveStateType.auto.rawValue),
+                                SaveState.corePredicate(for: game, coreIdentifier: activeEmulatorCore.deltaCore.gameType == game.type ? activeEmulatorCore.deltaCore.identifier : nil)])
                             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SaveState.creationDate), ascending: true)]
                             
                             do

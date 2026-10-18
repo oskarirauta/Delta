@@ -253,14 +253,14 @@ private extension WhatsNewViewController
             if !PurchaseManager.shared.supportsExperimentalFeatures
             {
                 // Only show non-Experimental Features.
-                preferredFeatures = preferredFeatures.filter { !$0.isPatronExclusive }
+                preferredFeatures = preferredFeatures.filter { PurchaseManager.isPersonalBuild || !$0.isPatronExclusive }
             }
             
             // Only display first `maxFeatureCount` preferred features.
             preferredFeatures = Array(preferredFeatures.prefix(Self.maxFeatureCount))
             
-            let generalDataSource = RSTArrayCollectionViewDataSource<Box<NewFeature>>(items: preferredFeatures.filter { !$0.isPatronExclusive }.map(Box.init))
-            let patronsDataSource = RSTArrayCollectionViewDataSource<Box<NewFeature>>(items: preferredFeatures.filter { $0.isPatronExclusive }.map(Box.init))
+            let generalDataSource = RSTArrayCollectionViewDataSource<Box<NewFeature>>(items: preferredFeatures.filter { PurchaseManager.isPersonalBuild || !$0.isPatronExclusive }.map(Box.init))
+            let patronsDataSource = RSTArrayCollectionViewDataSource<Box<NewFeature>>(items: preferredFeatures.filter { !PurchaseManager.isPersonalBuild && $0.isPatronExclusive }.map(Box.init))
             
             let dataSource = RSTCompositeCollectionViewDataSource(dataSources: [generalDataSource, patronsDataSource])
             dataSource.cellConfigurationHandler = { (cell, feature, indexPath) in

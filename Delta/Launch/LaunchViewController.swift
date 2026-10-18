@@ -118,7 +118,7 @@ extension LaunchViewController
         guard !self.presentedGameViewController else { return }
         self.presentedGameViewController = true
         
-        PatreonAPI.shared.refreshPatreonAccount()
+        if !PurchaseManager.isPersonalBuild { PatreonAPI.shared.refreshPatreonAccount() }
         
         if #available(iOS 17.5, *)
         {

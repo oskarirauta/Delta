@@ -9,6 +9,7 @@
 import Foundation
 
 import DeltaCore
+import GBADeltaCore
 import Harmony
 
 @objc public enum SaveStateType: Int16
@@ -93,13 +94,31 @@ public class SaveState: _SaveState, SaveStateProtocol
         }
     }
     
-    class func fetchRequest(for game: Game, type: SaveStateType) -> NSFetchRequest<SaveState>
+    // Legacy GBA states belong to VBA-M; never reinterpret them as mGBA states.
+    func isCompatibleCore(with core: DeltaCoreProtocol) -> Bool
+    {
+        guard let game = self.game else { return false }
+        return Self.corePredicate(for: game, coreIdentifier: core.identifier).evaluate(with: self)
+    }
+
+    class func corePredicate(for game: Game, coreIdentifier: String? = nil) -> NSPredicate
+    {
+        guard game.type == .gba else { return NSPredicate(value: true) }
+        let identifier = coreIdentifier ?? System.gba.deltaCore.identifier
+        let exact = NSPredicate(format: "%K == %@", #keyPath(SaveState.coreIdentifier), identifier)
+        if identifier == GBA.core.identifier
+        {
+            return NSCompoundPredicate(orPredicateWithSubpredicates: [exact, NSPredicate(format: "%K == nil", #keyPath(SaveState.coreIdentifier))])
+        }
+        return exact
+    }
+
+    class func fetchRequest(for game: Game, type: SaveStateType, core: DeltaCoreProtocol? = nil) -> NSFetchRequest<SaveState>
     {
         let predicate = NSPredicate(format: "%K == %@ AND %K == %d", #keyPath(SaveState.game), game, #keyPath(SaveState.type), type.rawValue)
         
         let fetchRequest: NSFetchRequest<SaveState> = SaveState.fetchRequest()
-        fetchRequest.predicate = predicate
-        
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, corePredicate(for: game, coreIdentifier: core?.identifier)])
         return fetchRequest
     }
 }
@@ -159,6 +178,7 @@ extension SaveState: Syncable
                 {
                     switch system
                     {
+                    case .gba: self.coreIdentifier = GBA.core.identifier
                     case .ds: self.coreIdentifier = Delta.desmumeCoreID // Assume DS save state with nil coreIdentifier is from DeSmuME core.
                     default: self.coreIdentifier = system.deltaCore.identifier
                     }

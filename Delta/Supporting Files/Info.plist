@@ -201,8 +201,12 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSSupportsGameMode</key>
+	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<false/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Connect Nintendo Switch 2 controllers to play games.</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_altserver._tcp</string>
@@ -321,8 +325,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportsDocumentBrowser</key>
-	<true/>
-	<key>LSSupportsGameMode</key>
 	<true/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
@@ -499,5 +501,7 @@
 			</dict>
 		</dict>
 	</array>
+	<key>NSMotionUsageDescription</key>
+	<string>Delta uses motion data for tilt and gyroscope controls in supported games.</string>
 </dict>
 </plist>

@@ -566,9 +566,25 @@ private extension SaveStatesViewController
     {
         if let system = System(gameType: self.game.type)
         {
-            let predicate = NSPredicate(format: "%K == %@ AND %K == %@", #keyPath(SaveState.game), self.game, #keyPath(SaveState.coreIdentifier), system.deltaCore.identifier)
+            let deltaCore: DeltaCoreProtocol
+            if let emulatorCore, emulatorCore.game.fileURL == self.game.fileURL {
+                deltaCore = emulatorCore.deltaCore
+            } else {
+                deltaCore = system.deltaCore
+            }
+            let predicate: NSPredicate
+            if self.game.type == .gba
+            {
+                predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                    NSPredicate(format: "%K == %@", #keyPath(SaveState.game), self.game),
+                    SaveState.corePredicate(for: self.game, coreIdentifier: deltaCore.identifier)])
+            }
+            else
+            {
+                predicate = NSPredicate(format: "%K == %@ AND %K == %@", #keyPath(SaveState.game), self.game, #keyPath(SaveState.coreIdentifier), deltaCore.identifier)
+            }
             
-            if let version = system.deltaCore.version
+            if let version = deltaCore.version
             {
                 let filterPredicate: NSPredicate
                 switch filter
