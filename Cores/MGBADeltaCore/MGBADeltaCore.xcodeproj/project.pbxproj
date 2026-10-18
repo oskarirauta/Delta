@@ -1,0 +1,557 @@
+// !$*UTF8*$!
+{
+	"classes" = {
+	};
+	"objectVersion" = "77";
+	"archiveVersion" = "1";
+	"objects" = {
+		"6F6E01E1BC4046249E1DC71B" = {
+			"path" = "MGBADeltaCore";
+			"isa" = "PBXGroup";
+			"children" = (
+				"2836E3EFF26048AE90BF365D",
+				"08D2F6F451E84448AE67FCBD",
+			);
+			"sourceTree" = "<group>";
+		};
+		"7A3E7AC5034D46E58FD933CF" = {
+			"name" = "Build pinned MGBA backend";
+			"inputPaths" = (
+			);
+			"buildActionMask" = "2147483647";
+			"shellPath" = "/bin/bash";
+			"isa" = "PBXShellScriptBuildPhase";
+			"runOnlyForDeploymentPostprocessing" = "0";
+			"outputPaths" = (
+				"$(BUILD_DIR)/MGBABackend/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/libMGBABackend.a",
+			);
+			"shellScript" = "\"$PROJECT_DIR/build-backend.sh\" \"$PLATFORM_NAME\" \"$CONFIGURATION\" \"$BUILD_DIR/MGBABackend/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME\"\n";
+			"files" = (
+			);
+			"alwaysOutOfDate" = "1";
+		};
+		"94A90D7E4B36456B8FBE9A6B" = {
+			"isa" = "PBXGroup";
+			"name" = "Products";
+			"children" = (
+				"2FCFD21A0C164BD78B115AAC",
+			);
+			"sourceTree" = "<group>";
+		};
+		"DEE0B33EAB9C44C2B1014FBB" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"517E2DE867454BFFA4E4FF8C",
+				"CC98F49B2601470C804F3D83",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"EB5C976DE9B045D28A16B54F" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"3D2F4F7A7FE44E88816C153F",
+				"3418C127B1A247D49A6C7556",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"33C996B3626A473DB4BA0105" = {
+			"buildConfigurationList" = "1BCDE410AD424B849AB2CC89";
+			"isa" = "PBXAggregateTarget";
+			"productName" = "MGBABackend";
+			"buildPhases" = (
+				"7A3E7AC5034D46E58FD933CF",
+			);
+			"dependencies" = (
+			);
+			"name" = "MGBABackend";
+		};
+		"513C4DE8F75540B991552ADC" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Release";
+			"buildSettings" = {
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator appletvos appletvsimulator";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"ARCHS" = "arm64";
+				"TVOS_DEPLOYMENT_TARGET" = "17.0";
+				"SDKROOT" = "iphoneos";
+			};
+		};
+		"D4C7E806CEA94EB7877FCF08" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"DYLIB_CURRENT_VERSION" = "1";
+				"DYLIB_INSTALL_NAME_BASE" = "@rpath";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator appletvos appletvsimulator";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.delta.MGBADeltaCore";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "c++17";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"FRAMEWORK_SEARCH_PATHS" = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)",
+				);
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"OTHER_LDFLAGS" = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework DeltaCore",
+					"-framework GBADeltaCore",
+					"$(BUILD_DIR)/MGBABackend/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/libMGBABackend.a",
+					"-lz",
+				);
+				"DYLIB_COMPATIBILITY_VERSION" = "1";
+				"VERSIONING_SYSTEM" = "apple-generic";
+				"SDKROOT" = "iphoneos";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"HEADER_SEARCH_PATHS" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mgba/include",
+				);
+				"PRODUCT_NAME" = "MGBADeltaCore";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"CODE_SIGN_IDENTITY" = "";
+				"SKIP_INSTALL" = "YES";
+				"INSTALL_PATH" = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				"TARGETED_DEVICE_FAMILY[sdk=appletv*]" = "3";
+				"TVOS_DEPLOYMENT_TARGET" = "17.0";
+				"ARCHS" = "arm64";
+				"DEFINES_MODULE" = "YES";
+				"INFOPLIST_FILE" = "MGBADeltaCore/Info.plist";
+				"OTHER_LDFLAGS[sdk=iphone*]" = (
+					"$(inherited)",
+					"-framework CoreMotion",
+				);
+			};
+			"name" = "Release";
+		};
+		"4289EE70BB9449E9831BF09D" = {
+			"isa" = "XCConfigurationList";
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Debug";
+			"buildConfigurations" = (
+				"0FF18BDEAB9D4D0E922B6C29",
+				"D4C7E806CEA94EB7877FCF08",
+			);
+		};
+		"33615CE7CABE41C4AD7F787E" = {
+			"isa" = "PBXGroup";
+			"sourceTree" = "<group>";
+			"children" = (
+				"E1C3038E03AB43C291D5378C",
+				"6F6E01E1BC4046249E1DC71B",
+				"D965ED0410CB4D399E5F8685",
+				"71E9239B71D648E9AE0B6D62",
+				"2502686983BF43678D16B211",
+				"94A90D7E4B36456B8FBE9A6B",
+				"A9593E6DB66C422B90830B8A",
+			);
+		};
+		"2836E3EFF26048AE90BF365D" = {
+			"path" = "MGBA.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "<group>";
+		};
+		"0FF18BDEAB9D4D0E922B6C29" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"DYLIB_CURRENT_VERSION" = "1";
+				"DYLIB_INSTALL_NAME_BASE" = "@rpath";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator appletvos appletvsimulator";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.delta.MGBADeltaCore";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "c++17";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"FRAMEWORK_SEARCH_PATHS" = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)",
+				);
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"OTHER_LDFLAGS" = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework DeltaCore",
+					"-framework GBADeltaCore",
+					"$(BUILD_DIR)/MGBABackend/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/libMGBABackend.a",
+					"-lz",
+				);
+				"DYLIB_COMPATIBILITY_VERSION" = "1";
+				"VERSIONING_SYSTEM" = "apple-generic";
+				"SDKROOT" = "iphoneos";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"HEADER_SEARCH_PATHS" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mgba/include",
+				);
+				"PRODUCT_NAME" = "MGBADeltaCore";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"CODE_SIGN_IDENTITY" = "";
+				"SKIP_INSTALL" = "YES";
+				"INSTALL_PATH" = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				"TARGETED_DEVICE_FAMILY[sdk=appletv*]" = "3";
+				"TVOS_DEPLOYMENT_TARGET" = "17.0";
+				"ARCHS" = "arm64";
+				"DEFINES_MODULE" = "YES";
+				"INFOPLIST_FILE" = "MGBADeltaCore/Info.plist";
+				"OTHER_LDFLAGS[sdk=iphone*]" = (
+					"$(inherited)",
+					"-framework CoreMotion",
+				);
+			};
+			"name" = "Debug";
+		};
+		"896C7C8617F540CEAA049105" = {
+			"path" = "MGBAEmulatorBridge.h";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.c.h";
+			"sourceTree" = "<group>";
+		};
+		"1CB06FBCA5084D30B540DCF7" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "08D2F6F451E84448AE67FCBD";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"Public",
+				);
+			};
+		};
+		"D965ED0410CB4D399E5F8685" = {
+			"path" = "MGBADeltaCore/Resources";
+			"isa" = "PBXGroup";
+			"name" = "Resources";
+			"children" = (
+				"61F241E570154A11BAEC3F32",
+			);
+			"sourceTree" = "<group>";
+		};
+		"88A5862A114A4086BF7F7273" = {
+			"buildConfigurationList" = "E9D41A4836E649C382867484";
+			"targets" = (
+				"96A2F72F9C904521BF9EA891",
+				"33C996B3626A473DB4BA0105",
+			);
+			"minimizedProjectReferenceProxies" = "1";
+			"developmentRegion" = "en";
+			"knownRegions" = (
+				"Base",
+				"en",
+			);
+			"isa" = "PBXProject";
+			"productRefGroup" = "94A90D7E4B36456B8FBE9A6B";
+			"projectDirPath" = "";
+			"attributes" = {
+				"LastUpgradeCheck" = "1600";
+				"BuildIndependentTargetsInParallel" = "YES";
+				"TargetAttributes" = {
+				};
+			};
+			"hasScannedForEncodings" = "0";
+			"projectRoot" = "";
+			"preferredProjectObjectVersion" = "77";
+			"mainGroup" = "33615CE7CABE41C4AD7F787E";
+		};
+		"3D2F4F7A7FE44E88816C153F" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "2836E3EFF26048AE90BF365D";
+		};
+		"DC2B2387640D4BCB8E5E386E" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "896C7C8617F540CEAA049105";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"Public",
+				);
+			};
+		};
+		"1006F7E00A9C4B12B289A29A" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Debug";
+			"buildSettings" = {
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator appletvos appletvsimulator";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"ARCHS" = "arm64";
+				"TVOS_DEPLOYMENT_TARGET" = "17.0";
+				"SDKROOT" = "iphoneos";
+			};
+		};
+		"49799D36861644A2B1B2B3FB" = {
+			"isa" = "PBXTargetDependency";
+			"target" = "33C996B3626A473DB4BA0105";
+		};
+		"1BCDE410AD424B849AB2CC89" = {
+			"isa" = "XCConfigurationList";
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+			"buildConfigurations" = (
+				"1006F7E00A9C4B12B289A29A",
+				"513C4DE8F75540B991552ADC",
+			);
+		};
+		"BCC741BA408247D2A6C61AB6" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"7962B7C4AD904489B157F4CD",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"08D2F6F451E84448AE67FCBD" = {
+			"path" = "MGBADeltaCore.h";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.c.h";
+			"sourceTree" = "<group>";
+		};
+		"64F5E7DA3FEC49E9BB242A47" = {
+			"isa" = "PBXHeadersBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"1CB06FBCA5084D30B540DCF7",
+				"DC2B2387640D4BCB8E5E386E",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"8FD4C0F19EEA4EAC84A82455" = {
+			"path" = "MGBAEmulatorBridge.m";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.c.objc";
+			"sourceTree" = "<group>";
+		};
+		"E1C3038E03AB43C291D5378C" = {
+			"path" = "MGBADeltaCore/Bridge";
+			"isa" = "PBXGroup";
+			"name" = "Bridge";
+			"children" = (
+				"896C7C8617F540CEAA049105",
+				"8FD4C0F19EEA4EAC84A82455",
+			);
+			"sourceTree" = "<group>";
+		};
+		"96A2F72F9C904521BF9EA891" = {
+			"productType" = "com.apple.product-type.framework";
+			"productReference" = "2FCFD21A0C164BD78B115AAC";
+			"buildConfigurationList" = "4289EE70BB9449E9831BF09D";
+			"packageProductDependencies" = (
+			);
+			"productName" = "MGBADeltaCore";
+			"isa" = "PBXNativeTarget";
+			"buildPhases" = (
+				"64F5E7DA3FEC49E9BB242A47",
+				"EB5C976DE9B045D28A16B54F",
+				"BCC741BA408247D2A6C61AB6",
+				"DEE0B33EAB9C44C2B1014FBB",
+			);
+			"dependencies" = (
+				"49799D36861644A2B1B2B3FB",
+			);
+			"name" = "MGBADeltaCore";
+			"buildRules" = (
+			);
+		};
+		"EC54588ADC154BE18BA9EEBC" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_WARN_RANGE_LOOP_ANALYSIS" = "YES";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"CLANG_WARN_INFINITE_RECURSION" = "YES";
+				"ARCHS" = "arm64";
+				"ONLY_ACTIVE_ARCH" = "YES";
+				"GCC_WARN_UNUSED_VARIABLE" = "YES";
+				"CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" = "YES";
+				"CLANG_WARN_UNGUARDED_AVAILABILITY" = "YES_AGGRESSIVE";
+				"COPY_PHASE_STRIP" = "NO";
+				"CLANG_WARN_BOOL_CONVERSION" = "YES";
+				"CLANG_WARN_ENUM_CONVERSION" = "YES";
+				"CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" = "YES";
+				"CLANG_WARN_COMMA" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG";
+				"SWIFT_VERSION" = "5.0";
+				"CLANG_WARN_INT_CONVERSION" = "YES";
+				"ENABLE_STRICT_OBJC_MSGSEND" = "YES";
+				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
+				"CLANG_WARN_EMPTY_BODY" = "YES";
+				"SDKROOT" = "iphoneos";
+				"DEFINES_MODULE" = "YES";
+				"CLANG_WARN_DOCUMENTATION_COMMENTS" = "YES";
+				"MTL_ENABLE_DEBUG_INFO" = "INCLUDE_SOURCE";
+				"MTL_FAST_MATH" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"CLANG_CXX_LIBRARY" = "libc++";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"GCC_WARN_UNINITIALIZED_AUTOS" = "YES_AGGRESSIVE";
+				"GCC_C_LANGUAGE_STANDARD" = "gnu11";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"ALWAYS_SEARCH_USER_PATHS" = "NO";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"CLANG_WARN_DIRECT_OBJC_ISA_USAGE" = "YES_ERROR";
+				"ENABLE_TESTABILITY" = "YES";
+				"CLANG_WARN_CONSTANT_CONVERSION" = "YES";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"CLANG_WARN_OBJC_ROOT_CLASS" = "YES_ERROR";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION" = "YES";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "c++17";
+				"GCC_DYNAMIC_NO_PIC" = "NO";
+				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+				"CLANG_ANALYZER_NONNULL" = "YES";
+				"CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION" = "YES_AGGRESSIVE";
+				"CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER" = "YES";
+				"CLANG_ENABLE_OBJC_WEAK" = "YES";
+				"CLANG_WARN_STRICT_PROTOTYPES" = "YES";
+				"GCC_OPTIMIZATION_LEVEL" = "0";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"GCC_WARN_ABOUT_RETURN_TYPE" = "YES_ERROR";
+				"GCC_WARN_UNUSED_FUNCTION" = "YES";
+				"CLANG_WARN_UNREACHABLE_CODE" = "YES";
+				"SKIP_INSTALL" = "YES";
+				"ENABLE_BITCODE" = "NO";
+				"GCC_PREPROCESSOR_DEFINITIONS" = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+			};
+			"name" = "Debug";
+		};
+		"2502686983BF43678D16B211" = {
+			"isa" = "PBXGroup";
+			"name" = "Frameworks";
+			"children" = (
+				"66B5C624D2344688B388E4D1",
+			);
+			"sourceTree" = "<group>";
+		};
+		"A4E8139FEB9C4A7D902289DC" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_WARN_RANGE_LOOP_ANALYSIS" = "YES";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"CLANG_WARN_INFINITE_RECURSION" = "YES";
+				"SWIFT_COMPILATION_MODE" = "wholemodule";
+				"ARCHS" = "arm64";
+				"GCC_WARN_UNUSED_VARIABLE" = "YES";
+				"CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" = "YES";
+				"CLANG_WARN_UNGUARDED_AVAILABILITY" = "YES_AGGRESSIVE";
+				"COPY_PHASE_STRIP" = "NO";
+				"CLANG_WARN_BOOL_CONVERSION" = "YES";
+				"CLANG_WARN_ENUM_CONVERSION" = "YES";
+				"CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" = "YES";
+				"CLANG_WARN_COMMA" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"CLANG_WARN_INT_CONVERSION" = "YES";
+				"ENABLE_STRICT_OBJC_MSGSEND" = "YES";
+				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
+				"CLANG_WARN_EMPTY_BODY" = "YES";
+				"SDKROOT" = "iphoneos";
+				"DEFINES_MODULE" = "YES";
+				"CLANG_WARN_DOCUMENTATION_COMMENTS" = "YES";
+				"MTL_ENABLE_DEBUG_INFO" = "NO";
+				"MTL_FAST_MATH" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"CLANG_CXX_LIBRARY" = "libc++";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"GCC_WARN_UNINITIALIZED_AUTOS" = "YES_AGGRESSIVE";
+				"GCC_C_LANGUAGE_STANDARD" = "gnu11";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"ALWAYS_SEARCH_USER_PATHS" = "NO";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"CLANG_WARN_DIRECT_OBJC_ISA_USAGE" = "YES_ERROR";
+				"CLANG_WARN_CONSTANT_CONVERSION" = "YES";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"CLANG_WARN_OBJC_ROOT_CLASS" = "YES_ERROR";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION" = "YES";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "c++17";
+				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+				"CLANG_ANALYZER_NONNULL" = "YES";
+				"CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION" = "YES_AGGRESSIVE";
+				"CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER" = "YES";
+				"CLANG_ENABLE_OBJC_WEAK" = "YES";
+				"CLANG_WARN_STRICT_PROTOTYPES" = "YES";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"GCC_WARN_ABOUT_RETURN_TYPE" = "YES_ERROR";
+				"GCC_WARN_UNUSED_FUNCTION" = "YES";
+				"CLANG_WARN_UNREACHABLE_CODE" = "YES";
+				"ENABLE_NS_ASSERTIONS" = "NO";
+				"SKIP_INSTALL" = "YES";
+				"ENABLE_BITCODE" = "NO";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
+			};
+			"name" = "Release";
+		};
+		"2FCFD21A0C164BD78B115AAC" = {
+			"path" = "MGBADeltaCore.framework";
+			"isa" = "PBXFileReference";
+			"includeInIndex" = "0";
+			"explicitFileType" = "wrapper.framework";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"E9D41A4836E649C382867484" = {
+			"isa" = "XCConfigurationList";
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Debug";
+			"buildConfigurations" = (
+				"EC54588ADC154BE18BA9EEBC",
+				"A4E8139FEB9C4A7D902289DC",
+			);
+		};
+		"517E2DE867454BFFA4E4FF8C" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "66B5C624D2344688B388E4D1";
+		};
+		"66B5C624D2344688B388E4D1" = {
+			"path" = "DeltaCore.framework";
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.framework";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"7962B7C4AD904489B157F4CD" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "61F241E570154A11BAEC3F32";
+		};
+		"61F241E570154A11BAEC3F32" = {
+			"path" = "THIRD_PARTY_NOTICES.txt";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"sourceTree" = "<group>";
+		};
+		"3418C127B1A247D49A6C7556" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "8FD4C0F19EEA4EAC84A82455";
+		};
+		"71E9239B71D648E9AE0B6D62" = {
+			"path" = "MGBADeltaCore/Types";
+			"isa" = "PBXGroup";
+			"name" = "Types";
+			"children" = (
+			);
+			"sourceTree" = "<group>";
+		};
+		"A9593E6DB66C422B90830B8A" = {
+			"isa" = "PBXFileReference";
+			"path" = "GBADeltaCore.framework";
+			"explicitFileType" = "wrapper.framework";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"CC98F49B2601470C804F3D83" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A9593E6DB66C422B90830B8A";
+		};
+	};
+	"rootObject" = "88A5862A114A4086BF7F7273";
+}

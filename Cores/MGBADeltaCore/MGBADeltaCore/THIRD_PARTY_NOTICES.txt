@@ -1,0 +1,3 @@
+mGBA 0.10.5: Copyright Jeffrey Pfau and contributors. Mozilla Public License 2.0.
+Full license and source: Cores/MGBADeltaCore/mgba/LICENSE and https://github.com/mgba-emu/mgba/tree/0.10.5
+Delta bridge: based on the Delta emulator bridging API and concepts from https://github.com/gal-leib/GBADeltaCore (GPL-3.0).

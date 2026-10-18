@@ -12,6 +12,7 @@ import NESDeltaCore
 import SNESDeltaCore
 import GBCDeltaCore
 import GBADeltaCore
+import MGBADeltaCore
 import N64DeltaCore
 import MelonDSDeltaCore
 import GPGXDeltaCore
@@ -76,7 +77,7 @@ extension DeltaCoreProtocol
         switch self
         {
         case NES.core, SNES.core, GBC.core: return 4
-        case GBA.core: return 3
+        case GBA.core, MGBA.core: return 3
         case N64.core where UIDevice.current.hasA11ProcessorOrBetter: return 3
         case N64.core where UIDevice.current.hasA9ProcessorOrBetter: return 1.5
         case MelonDS.core where UIDevice.current.hasA15ProcessorOrBetter || ProcessInfo.processInfo.isJITAvailable: return 3
@@ -110,6 +111,11 @@ extension DeltaCoreProtocol
                                       .developer: .init(value: NSLocalizedString("Snes9x Team", comment: "")),
                                       .version: .init(value: NSLocalizedString("1.63", comment: ""), url: URL(string: "https://github.com/snes9xgit/snes9x/releases/tag/1.63")),
                                       .source: .init(value: NSLocalizedString("GitHub", comment: ""), url: URL(string: "https://github.com/snes9xgit/snes9x"))])
+        case MGBA.core:
+            return DeltaCoreMetadata([.name: .init(value: "mGBA", url: URL(string: "https://mgba.io")),
+                                      .developer: .init(value: "Jeffrey Pfau and contributors"),
+                                      .version: .init(value: "0.10.5", url: URL(string: "https://github.com/mgba-emu/mgba/releases/tag/0.10.5")),
+                                      .source: .init(value: "GitHub", url: URL(string: "https://github.com/mgba-emu/mgba"))])
         case GBA.core:
             return DeltaCoreMetadata([.name: .init(value: NSLocalizedString("VisualBoyAdvance-M", comment: ""), url: URL(string: "https://visualboyadvance-m.org")),
                                       .developer: .init(value: NSLocalizedString("VBA-M Team", comment: "")),
