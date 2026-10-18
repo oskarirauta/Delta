@@ -31,6 +31,8 @@
 	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Connect Nintendo Switch 2 controllers to play games.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Delta uses the local Wi-Fi network to allow uploading ROM files wirelessly from your phone or computer.</string>
 	<key>UIRequiredDeviceCapabilities</key>

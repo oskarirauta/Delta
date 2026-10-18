@@ -35,6 +35,32 @@ final class ResumeAndResolutionTests: XCTestCase {
         }
     }
 
+    func testPartiallyWrittenFailedSavePreservesResumePoint() throws {
+        try withFiles { files in
+            try files.saveAutomatic { try Data([42]).write(to: $0) }
+            XCTAssertThrowsError(try files.saveAutomatic { temporary in
+                try Data([1, 2]).write(to: temporary)
+                throw CocoaError(.fileWriteUnknown)
+            })
+            XCTAssertEqual(try Data(contentsOf: files.automaticURL), Data([42]))
+            XCTAssertEqual(try FileManager.default.contentsOfDirectory(atPath: files.romURL.deletingLastPathComponent().path), ["Game.gba.autosave"])
+        }
+    }
+
+    func testGBACoresKeepSeparateResumePoints() throws {
+        try withFiles { vba in
+            let mgba = TVGameStateFiles(romURL: vba.romURL, coreNamespace: "mgba")
+            try vba.saveAutomatic { try Data([1]).write(to: $0) }
+            XCTAssertNil(mgba.resumeURL)
+            XCTAssertNotEqual(mgba.manualURL, vba.manualURL)
+            try mgba.saveAutomatic { try Data([2]).write(to: $0) }
+            XCTAssertEqual(try Data(contentsOf: vba.automaticURL), Data([1]))
+            XCTAssertEqual(try Data(contentsOf: mgba.automaticURL), Data([2]))
+            XCTAssertEqual(vba.resumeURL, vba.automaticURL)
+            XCTAssertEqual(mgba.resumeURL, mgba.automaticURL)
+        }
+    }
+
     func testEmptyStateIsNotOfferedForResume() throws {
         try withFiles { files in
             try Data().write(to: files.automaticURL)

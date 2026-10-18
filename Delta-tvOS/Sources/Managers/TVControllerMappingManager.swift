@@ -10,6 +10,7 @@ import GBADeltaCore
 import GPGXDeltaCore
 import MelonDSDeltaCore
 import DolphinDeltaCore
+import PlayDeltaCore
 
 /// Represents a physical button or direction on an MFi / Xbox / PlayStation / Switch gamepad
 enum TVGamepadButton: String, CaseIterable, Identifiable, Codable {
@@ -28,6 +29,10 @@ enum TVGamepadButton: String, CaseIterable, Identifiable, Codable {
     case down = "down"                       // D-Pad Down
     case left = "left"                       // D-Pad Left
     case right = "right"                     // D-Pad Right
+    case leftThumbstickUp = "leftThumbstickUp"
+    case leftThumbstickDown = "leftThumbstickDown"
+    case leftThumbstickLeft = "leftThumbstickLeft"
+    case leftThumbstickRight = "leftThumbstickRight"
     case rightThumbstickUp = "rightThumbstickUp"
     case rightThumbstickDown = "rightThumbstickDown"
     case rightThumbstickLeft = "rightThumbstickLeft"
@@ -52,6 +57,10 @@ enum TVGamepadButton: String, CaseIterable, Identifiable, Codable {
         case .down: return pad.dpad.down.value
         case .left: return pad.dpad.left.value
         case .right: return pad.dpad.right.value
+        case .leftThumbstickUp: return pad.leftThumbstick.up.value
+        case .leftThumbstickDown: return pad.leftThumbstick.down.value
+        case .leftThumbstickLeft: return pad.leftThumbstick.left.value
+        case .leftThumbstickRight: return pad.leftThumbstick.right.value
         case .rightThumbstickUp: return pad.rightThumbstick.up.value
         case .rightThumbstickDown: return pad.rightThumbstick.down.value
         case .rightThumbstickLeft: return pad.rightThumbstick.left.value
@@ -59,6 +68,12 @@ enum TVGamepadButton: String, CaseIterable, Identifiable, Codable {
         case .l3: return pad.leftThumbstickButton?.value ?? 0
         case .r3: return pad.rightThumbstickButton?.value ?? 0
         }
+    }
+
+    func value(in controller: DeltaCore.GameController) -> Float {
+        if let native = controller as? MFiGameController, let pad = native.controller.extendedGamepad { return value(in: pad) }
+        guard let input = MFiGameController.Input(rawValue: rawValue) else { return 0 }
+        return Float(controller.activatedInputs[AnyInput(input)] ?? 0)
     }
 
     var id: String { rawValue }
@@ -80,12 +95,16 @@ enum TVGamepadButton: String, CaseIterable, Identifiable, Codable {
         case .down: return "D-Pad Down"
         case .left: return "D-Pad Left"
         case .right: return "D-Pad Right"
+        case .leftThumbstickUp: return "Left Stick Up"
+        case .leftThumbstickDown: return "Left Stick Down"
+        case .leftThumbstickLeft: return "Left Stick Left"
+        case .leftThumbstickRight: return "Left Stick Right"
         case .rightThumbstickUp: return "Right Stick Up"
         case .rightThumbstickDown: return "Right Stick Down"
         case .rightThumbstickLeft: return "Right Stick Left"
         case .rightThumbstickRight: return "Right Stick Right"
-        case .l3: return "L3 (Vasen Tatti)"
-        case .r3: return "R3 (Oikea Tatti)"
+        case .l3: return "L3 (Left Stick)"
+        case .r3: return "R3 (Right Stick)"
         }
     }
 }
@@ -98,6 +117,7 @@ struct TVConsoleAction: Identifiable, Hashable {
     let category: String
 }
 
+@MainActor
 class TVControllerMappingManager: ObservableObject {
     static let shared = TVControllerMappingManager()
     
@@ -193,6 +213,10 @@ class TVControllerMappingManager: ObservableObject {
                 TVConsoleAction(id: "left", displayName: "D-Pad Left", system: .nes, category: "D-Pad"),
                 TVConsoleAction(id: "right", displayName: "D-Pad Right", system: .nes, category: "D-Pad")
             ]
+        case .ps2:
+            return ["cross", "circle", "square", "triangle", "l1", "l2", "l3", "r1", "r2", "r3", "start", "select", "up", "down", "left", "right", "leftStickUp", "leftStickDown", "leftStickLeft", "leftStickRight", "rightStickUp", "rightStickDown", "rightStickLeft", "rightStickRight"].map {
+                TVConsoleAction(id: $0, displayName: $0.replacingOccurrences(of: "Stick", with: " Stick ").capitalized, system: .ps2, category: "DualShock 2")
+            }
         case .gamecube:
             return [
                 TVConsoleAction(id: "a", displayName: "A Button", system: .gamecube, category: "Action Buttons"),
@@ -277,6 +301,16 @@ class TVControllerMappingManager: ObservableObject {
                 "left": .left,
                 "right": .right
             ]
+        case .ps2:
+            return ["cross": .a, "circle": .b, "square": .x, "triangle": .y,
+                    "l1": .leftShoulder, "l2": .leftTrigger, "l3": .l3,
+                    "r1": .rightShoulder, "r2": .rightTrigger, "r3": .r3,
+                    "start": .start, "select": .select,
+                    "up": .up, "down": .down, "left": .left, "right": .right,
+                    "leftStickUp": .leftThumbstickUp, "leftStickDown": .leftThumbstickDown,
+                    "leftStickLeft": .leftThumbstickLeft, "leftStickRight": .leftThumbstickRight,
+                    "rightStickUp": .rightThumbstickUp, "rightStickDown": .rightThumbstickDown,
+                    "rightStickLeft": .rightThumbstickLeft, "rightStickRight": .rightThumbstickRight]
         case .gamecube:
             return [
                 "a": .a,
@@ -359,23 +393,9 @@ class TVControllerMappingManager: ObservableObject {
         // Ignore the button used to open the row until it has been released.
         func pressedButtons() -> [(String, TVGamepadButton)] {
             var result: [(String, TVGamepadButton)] = []
-            for controller in GCController.controllers() {
-                guard let pad = controller.extendedGamepad else { continue }
-                let buttons: [(TVGamepadButton, GCControllerButtonInput?)] = [
-                    (.a, pad.buttonA), (.b, pad.buttonB), (.x, pad.buttonX), (.y, pad.buttonY),
-                    (.leftShoulder, pad.leftShoulder), (.rightShoulder, pad.rightShoulder),
-                    (.leftTrigger, pad.leftTrigger), (.rightTrigger, pad.rightTrigger),
-                    (.start, pad.buttonMenu), (.select, pad.buttonOptions), (.menu, pad.buttonHome),
-                    (.up, pad.dpad.up), (.down, pad.dpad.down),
-                    (.left, pad.dpad.left), (.right, pad.dpad.right),
-                    (.rightThumbstickUp, pad.rightThumbstick.up),
-                    (.rightThumbstickDown, pad.rightThumbstick.down),
-                    (.rightThumbstickLeft, pad.rightThumbstick.left),
-                    (.rightThumbstickRight, pad.rightThumbstick.right),
-                    (.l3, pad.leftThumbstickButton),
-                    (.r3, pad.rightThumbstickButton)
-                ]
-                for (button, input) in buttons where (input?.value ?? 0) > 0.5 {
+            for controller in GameControllerRegistry.shared.connectedControllers {
+                guard (controller as? MFiGameController)?.controller.extendedGamepad != nil || controller is Switch2GameController else { continue }
+                for button in TVGamepadButton.allCases where button.value(in: controller) > 0.5 {
                     result.append(("\(ObjectIdentifier(controller))-\(button.rawValue)", button))
                 }
             }
@@ -390,10 +410,10 @@ class TVControllerMappingManager: ObservableObject {
             case .completed(let button):
                 self.setMapping(button, for: action)
                 self.stopListening()
-                if let controller = GCController.controllers().first(where: {
+                if let controller = GameControllerRegistry.shared.connectedControllers.first(where: {
                     capture.capturedKey == "\(ObjectIdentifier($0))-\(button.rawValue)"
                 }) {
-                    self.playMappingFeedback(on: controller)
+                    if let native = controller as? MFiGameController { self.playMappingFeedback(on: native.controller) }
                 }
                 completion(button)
             case nil:
@@ -463,6 +483,8 @@ class TVControllerMappingManager: ObservableObject {
             deltaMapping.set(N64GameInput.analogStickDown, forControllerInput: MFiGameController.Input.leftThumbstickDown)
             deltaMapping.set(N64GameInput.analogStickLeft, forControllerInput: MFiGameController.Input.leftThumbstickLeft)
             deltaMapping.set(N64GameInput.analogStickRight, forControllerInput: MFiGameController.Input.leftThumbstickRight)
+        } else if system == .ps2 {
+            // Both sticks are explicit, editable PS2 actions; keep the mappings above.
         } else if system == .gamecube {
             // Main control stick maps directly from left thumbstick
             deltaMapping.set(GameCubeGameInput.controlStickUp, forControllerInput: MFiGameController.Input.leftThumbstickUp)

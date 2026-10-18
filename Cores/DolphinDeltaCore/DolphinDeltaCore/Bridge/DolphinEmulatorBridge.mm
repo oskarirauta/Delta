@@ -63,10 +63,14 @@
         _preferredVideoResolution = CGSizeMake(640, 480);
         _emulationQueue = dispatch_queue_create("com.rileytestut.DolphinDeltaCore.EmulationQueue", DISPATCH_QUEUE_SERIAL);
         _frameSemaphore = dispatch_semaphore_create(0);
-        _isJITEnabled = YES;
+        _isJITEnabled = NO;
     }
     return self;
 }
+
+- (BOOL)isBackendAvailable { return NO; }
+- (BOOL)supportsJIT { return NO; }
+- (BOOL)isJITActive { return NO; }
 
 #pragma mark - Rendering View Setup -
 
@@ -111,6 +115,13 @@
 
 - (void)startWithGameURL:(NSURL *)gameURL
 {
+    if (!self.isBackendAvailable)
+    {
+        NSLog(@"[DolphinDeltaCore] Cannot start: the versioned Dolphin frontend adapter is not installed.");
+        self.gameURL = nil;
+        self.running = NO;
+        return;
+    }
     self.gameURL = gameURL;
     self.running = YES;
     self.paused = NO;
@@ -194,10 +205,9 @@
 - (void)saveGameSaveToURL:(NSURL *)url
 {
     NSLog(@"[DolphinDeltaCore] Flushing memory card to: %@", url.path);
-    if (self.saveUpdateHandler)
-    {
-        self.saveUpdateHandler();
-    }
+    // This method services a save request. Calling saveUpdateHandler here
+    // re-enters EmulatorCore.save() indefinitely. Real card I/O belongs here
+    // when the backend adapter is implemented.
 }
 
 - (void)loadGameSaveFromURL:(NSURL *)url
@@ -210,7 +220,7 @@
 - (BOOL)addCheatCode:(NSString *)cheatCode type:(NSString *)type
 {
     NSLog(@"[DolphinDeltaCore] Adding cheat: %@ (%@)", cheatCode, type);
-    return YES;
+    return NO;
 }
 
 - (void)resetCheats

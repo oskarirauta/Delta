@@ -58,9 +58,7 @@ class TVGameManager: ObservableObject {
                 guard !scannedPaths.contains(fileURL.path) else { continue }
                 scannedPaths.insert(fileURL.path)
                 
-                let ext = fileURL.pathExtension.lowercased()
-                
-                if let system = TVSystem.system(forFileExtension: ext) {
+                if let system = TVSystem.system(forFileURL: fileURL), system.isEnabled {
                     let game = TVGame(fileURL: fileURL, system: system)
                     newGamesBySystem[system]?.append(game)
                     flatList.append(game)
@@ -154,7 +152,7 @@ class TVGameManager: ObservableObject {
                 let ext = fileURL.pathExtension.lowercased()
                 
                 // Skip non-game system/cache files
-                let ignoredExtensions = ["plist", "savestate", "autosave", "sav", "dsv", "data", "db", "sqlite", "sqlite-wal", "sqlite-shm", "lock", "list"]
+                let ignoredExtensions = ["plist", "savestate", "autosave", "ps2save", "sav", "dsv", "data", "db", "sqlite", "sqlite-wal", "sqlite-shm", "lock", "list"]
                 if ignoredExtensions.contains(ext) || filename.hasPrefix(".") || filename == "data.data" {
                     continue
                 }
@@ -163,7 +161,8 @@ class TVGameManager: ObservableObject {
                 let sizeBytes = Int64(resources?.fileSize ?? 0)
                 let sizeFormatted = ByteCountFormatter.string(fromByteCount: sizeBytes, countStyle: .file)
                 
-                let matchedSystem = TVSystem.system(forFileExtension: ext)
+                let matchedSystem = TVSystem.system(forFileURL: fileURL)
+                if matchedSystem?.isEnabled == false { continue }
 
                 var internalTitle = ""
                 var status = "Ready to Play"

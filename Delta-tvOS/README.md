@@ -52,3 +52,34 @@ xcodebuild -workspace Delta.xcworkspace \
 ```
 
 On an Apple TV, verify one game per added core: web upload (including uppercase extensions and a ZIP), library discovery, gamepad input, battery save after exit/relaunch, and save-state round trips. For DS, also test pointer movement, touching all screen edges, dragging, lid input, pausing, and disconnecting the controller while touching. Check that existing NES/SNES/N64 controls and the mapping editor still behave correctly. Exit and relaunch a game to verify the resume prompt, and test background/foreground transitions. On a 4K TV, compare all display-resolution settings while checking that picture size stays constant.
+
+## Experimental Dolphin and JIT status
+
+The imported GameCube catalog metadata is preserved, but the Dolphin adapter is not registered as a playable core. Its original start/frame/save implementations were placeholders. Launching an imported GameCube file now explains this instead of entering an empty emulation session. The recursive save callback has been removed, and unsupported cheats no longer report success.
+
+The current melonDS build does not define `JIT_ENABLED`. Its menu therefore reports JIT as unsupported by this core build. The requested preference and actual backend state are separate; changing a supported core's preference applies on the next game start. Mupen64Plus/N64 CPU configuration is preserved and is not overridden by the DS/Dolphin setting. GPU family is not used as a proxy for JIT support, and a debugger flag is not presented as proof of active JIT execution.
+
+The public Wii integration reference is Cfretz244/Delta commit `268084ce895ce4f9d3aced3506571f1845f3674a`. It depends on the separate `Cfretz244/GCDeltaCore` repository at `a898037d8a518468804fce01c663927489406adc`; that source currently returns HTTP 404, including through the connected GitHub account. This is a different adapter from Delta PR #567. Matching source, headers, backend build metadata, and resources are needed before integrating either GameCube or Wii as playable systems. No Wii support is claimed by this build.
+
+## PlayStation 2 (disabled)
+
+PS2 is disabled in the tvOS app while executable-memory permission remains
+unavailable on the tested Apple TV. It is not registered, listed in the library,
+or advertised by the web uploader. PS2-only upload extensions are rejected;
+recognized PS2 ISO/ELF uploads are rejected before replacing an existing file.
+Shared ISO/ELF extensions remain available for GameCube. PlayDeltaCore sources
+and content detection are retained for a future JIT solution. Existing files
+are not deleted by disabling support.
+
+Web uploads now use `POST /upload-file?filename=NAME` with a raw body and
+`Content-Length`. The server writes in chunks of at most 64 KiB to a temporary
+file, then atomically publishes a complete upload. This avoids retaining multi-GB
+PS2/GameCube disc images in RAM. Legacy multipart `/upload` remains available for
+files up to 64 MiB. Interrupted streaming transfers leave the previous file intact.
+
+If an attached gamepad disconnects during play, emulation pauses and a controller
+notice replaces the pause/settings UI. Continue Game remains disabled until the
+previous controller count is restored; reconnecting never resumes automatically.
+Siri Remote does not satisfy this requirement. Surviving controllers retain their
+player slots, including when player one disconnects during a multiplayer game.
+The library remains accessible from the notice.

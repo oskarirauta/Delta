@@ -1,3 +1,4 @@
+import DeltaCore
 import SwiftUI
 import GameController
 
@@ -35,7 +36,7 @@ final class ControllerRemapViewController: GCEventViewController {
             host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         host.didMove(toParent: self)
-        NotificationCenter.default.addObserver(self, selector: #selector(controllerDisconnected), name: .GCControllerDidDisconnect, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(controllerDisconnected), name: .deltaControllerDidDisconnect, object: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -57,7 +58,7 @@ final class ControllerRemapViewController: GCEventViewController {
     }
 
     @objc private func controllerDisconnected() {
-        if !GCController.controllers().contains(where: { $0.extendedGamepad != nil }) {
+        if !GameControllerRegistry.shared.connectedControllers.contains(where: { ($0 as? MFiGameController)?.controller.extendedGamepad != nil || $0 is Switch2GameController }) {
             close()
         }
     }
@@ -96,7 +97,7 @@ private struct ControllerRemapContentView: View {
                 // Keep every system reachable as more cores are added.
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
-                        ForEach(TVSystem.allCases) { system in
+                        ForEach(TVSystem.enabledSystems) { system in
                             RemapSystemTabButton(
                                 system: system,
                                 isSelected: selectedSystem == system,

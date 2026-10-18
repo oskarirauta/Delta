@@ -7,7 +7,7 @@ let package = Package(
     products: [.library(name: "DeltaTVCatalog", targets: ["DeltaTVCatalog"])],
     targets: [
         .target(name: "DeltaTVCatalog", path: "Sources/Models",
-                exclude: ["TVGame.swift", "TVSystem+DeltaCore.swift"], sources: ["TVSystem.swift", "DSTouchPointer.swift", "ButtonCaptureState.swift", "TVGameStateFiles.swift", "TVDisplayResolution.swift", "TVImageSize.swift"]),
+                exclude: ["TVGame.swift", "TVSystem+DeltaCore.swift", "ProcessInfo+JIT.swift"], sources: ["TVSystem.swift", "DSTouchPointer.swift", "ButtonCaptureState.swift", "TVGameStateFiles.swift", "TVDisplayResolution.swift", "TVImageSize.swift", "TVJITStatus.swift", "TVROMUpload.swift"]),
         .testTarget(name: "DeltaTVCatalogTests", dependencies: ["DeltaTVCatalog"], path: "Tests")
     ]
 )

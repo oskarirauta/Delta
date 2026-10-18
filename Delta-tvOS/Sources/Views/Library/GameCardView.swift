@@ -88,6 +88,7 @@ struct GameCardView: View {
         case .genesis: return Color(red: 0.15, green: 0.35, blue: 0.7)
         case .ds: return Color(red: 0.5, green: 0.5, blue: 0.55)
         case .gamecube: return Color(red: 0.38, green: 0.28, blue: 0.65)
+        case .ps2: return Color(red: 0.15, green: 0.30, blue: 0.65)
         }
     }
 }

@@ -35,6 +35,7 @@ struct TVGame: Identifiable, Hashable {
         case .genesis: repoSystem = "Sega_-_Mega_Drive_-_Genesis"
         case .ds: repoSystem = "Nintendo_-_Nintendo_DS"
         case .gamecube: repoSystem = "Nintendo_-_GameCube"
+        case .ps2: repoSystem = "Sony_-_PlayStation_2"
         }
         
         let spaced = TVGame.insertSpacesInCamelCase(self.name)
@@ -155,7 +156,7 @@ struct TVGame: Identifiable, Hashable {
                     }
                 }
             }
-        case .nes, .gbc, .gba, .genesis, .ds, .gamecube:
+        case .nes, .gbc, .gba, .genesis, .ds, .gamecube, .ps2:
             break
         }
         return nil

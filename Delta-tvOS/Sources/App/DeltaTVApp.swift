@@ -11,10 +11,10 @@ struct DeltaTVApp: App {
     
     init() {
         // Register supported systems with Delta
-        TVSystem.allCases.forEach { Delta.register($0.core) }
+        TVSystem.playableSystems.forEach { Delta.register($0.core) }
         
         // Start monitoring physical controllers (DualSense, Xbox, Switch Pro, MFi)
-        ExternalGameControllerManager.shared.startMonitoring()
+        GameControllerRegistry.shared.startMonitoring()
         
         // Ensure all required system and emulator core directories exist on tvOS flash
         self.setupStorageDirectories()
@@ -30,7 +30,7 @@ struct DeltaTVApp: App {
             dirsToEnsure.append(caches.appendingPathComponent("Mupen64Plus", isDirectory: true))
         }
         dirsToEnsure.append(Delta.coresDirectoryURL)
-        for system in TVSystem.allCases {
+        for system in TVSystem.enabledSystems {
             dirsToEnsure.append(system.core.directoryURL)
         }
         dirsToEnsure.append(N64.core.directoryURL.appendingPathComponent("Config", isDirectory: true))

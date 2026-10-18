@@ -25,6 +25,11 @@ __attribute__((visibility("default")))
 @property (nonatomic, readonly) AVAudioFormat *preferredAudioFormat;
 @property (nonatomic, readonly) CGSize preferredVideoResolution;
 
+// The bundled library has no matching frontend headers in this checkout.
+// Keep startup unavailable until a versioned backend adapter is implemented.
+@property (nonatomic, readonly, getter=isBackendAvailable) BOOL backendAvailable;
+@property (nonatomic, readonly) BOOL supportsJIT;
+@property (nonatomic, readonly, getter=isJITActive) BOOL jitActive;
 @property (nonatomic, assign) BOOL isJITEnabled;
 
 - (void)registerRenderView:(UIView *)renderView;

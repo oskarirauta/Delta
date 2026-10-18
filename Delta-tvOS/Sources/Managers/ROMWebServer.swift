@@ -3,12 +3,24 @@ import Network
 import Combine
 import ZIPFoundation
 
+struct ActiveUploadInfo: Equatable {
+    let filename: String
+    var receivedBytes: Int
+    let totalBytes: Int
+    
+    var progress: Double {
+        totalBytes > 0 ? min(1.0, Double(receivedBytes) / Double(totalBytes)) : 0
+    }
+}
+
 class ROMWebServer: ObservableObject {
     static let shared = ROMWebServer()
     
     @Published var isRunning = false
     @Published var serverAddress: String = "Starting..."
     @Published var lastUploadedFileName: String?
+    @Published var activeUpload: ActiveUploadInfo?
+    @Published var isEmulating: Bool = false
     
     private var listener: NWListener?
     private let port: NWEndpoint.Port = 8080
@@ -87,6 +99,11 @@ class ROMWebServer: ObservableObject {
                         let fullPath = parts.count > 1 ? parts[1] : "/"
                         let path = fullPath.components(separatedBy: "?").first ?? fullPath
                         
+                        if self.isEmulating {
+                            self.sendErrorResponse(to: connection, message: "Emulation is currently in progress. ROM transfers are only permitted from the main library screen.", statusCode: 503)
+                            return
+                        }
+                        
                         if method == "GET" && path == "/" {
                             self.sendHTMLPage(to: connection)
                             return
@@ -95,6 +112,11 @@ class ROMWebServer: ObservableObject {
                             return
                         } else if (method == "POST" || method == "GET") && path == "/api/delete" {
                             self.handleDelete(fullPath: fullPath, body: receivedData.subdata(in: headerEnd.upperBound..<receivedData.count), connection: connection)
+                            return
+                        } else if method == "POST" && path == "/upload-file" {
+                            let initial = receivedData.subdata(in: headerEnd.upperBound..<receivedData.count)
+                            receivedData.removeAll()
+                            self.receiveFile(headers: lines, path: fullPath, initial: initial, connection: connection)
                             return
                         } else if method == "POST" && path == "/upload" {
                             // Extract Content-Length
@@ -106,6 +128,10 @@ class ROMWebServer: ObservableObject {
                                 }
                             }
                             
+                            guard contentLength > 0, contentLength <= 64 * 1024 * 1024 else {
+                                self.sendErrorResponse(to: connection, message: "Large uploads require /upload-file?filename=NAME with a raw file body and Content-Length.")
+                                return
+                            }
                             let bodyStartIndex = headerEnd.upperBound
                             let bodyReceivedSoFar = receivedData.count - bodyStartIndex
                             
@@ -116,7 +142,7 @@ class ROMWebServer: ObservableObject {
                                 // Wait for remaining body bytes
                                 func readRemainingBody() {
                                     let remaining = contentLength - (receivedData.count - bodyStartIndex)
-                                    connection.receive(minimumIncompleteLength: 1, maximumLength: max(remaining, 65536)) { moreData, _, isDone, readErr in
+                                    connection.receive(minimumIncompleteLength: 1, maximumLength: min(remaining, 65536)) { moreData, _, isDone, readErr in
                                         if let moreData = moreData {
                                             receivedData.append(moreData)
                                         }
@@ -138,6 +164,10 @@ class ROMWebServer: ObservableObject {
                     }
                 }
                 
+                if receivedData.count > 65536 {
+                    connection.cancel()
+                    return
+                }
                 if !isComplete && error == nil {
                     readNext()
                 } else {
@@ -149,6 +179,67 @@ class ROMWebServer: ObservableObject {
         readNext()
     }
     
+    private func receiveFile(headers: [String], path: String, initial: Data, connection: NWConnection) {
+        let components = URLComponents(string: "http://localhost" + path)
+        let filename = components?.queryItems?.first(where: { $0.name == "filename" })?.value ?? ""
+        let length = headers.first(where: { $0.lowercased().hasPrefix("content-length:") })?
+            .split(separator: ":", maxSplits: 1).last.flatMap { Int($0.trimmingCharacters(in: .whitespaces)) } ?? 0
+        let upload: TVROMUpload
+        do {
+            upload = try TVROMUpload(directory: TVGameManager.shared.romsDirectory, filename: filename, expectedBytes: length)
+            try upload.append(initial)
+            DispatchQueue.main.async {
+                self.activeUpload = ActiveUploadInfo(filename: filename, receivedBytes: initial.count, totalBytes: length)
+            }
+        } catch {
+            DispatchQueue.main.async { self.activeUpload = nil }
+            sendErrorResponse(to: connection, message: "Invalid upload: \(error.localizedDescription)")
+            return
+        }
+        func receiveNext() {
+            if upload.receivedBytes == upload.expectedBytes {
+                do {
+                    try upload.finish()
+                    DispatchQueue.main.async { self.activeUpload = nil }
+                    self.finishUpload(at: upload.destination, size: upload.receivedBytes, connection: connection)
+                } catch {
+                    DispatchQueue.main.async { self.activeUpload = nil }
+                    self.sendErrorResponse(to: connection, message: "Upload failed: \(error.localizedDescription)")
+                }
+                return
+            }
+            connection.receive(minimumIncompleteLength: 1, maximumLength: min(65536, upload.expectedBytes - upload.receivedBytes)) { data, _, complete, error in
+                do {
+                    if let data { try upload.append(data) }
+                    let current = upload.receivedBytes
+                    DispatchQueue.main.async {
+                        self.activeUpload?.receivedBytes = current
+                    }
+                    guard error == nil, !complete || upload.receivedBytes == upload.expectedBytes else { throw CocoaError(.fileReadCorruptFile) }
+                    receiveNext()
+                } catch {
+                    DispatchQueue.main.async { self.activeUpload = nil }
+                    self.sendErrorResponse(to: connection, message: "Upload interrupted: \(error.localizedDescription)")
+                }
+            }
+        }
+        receiveNext()
+    }
+
+    private func finishUpload(at url: URL, size: Int, connection: NWConnection) {
+        if url.pathExtension.lowercased() == "zip" {
+            do {
+                try FileManager.default.unzipItem(at: url, to: TVGameManager.shared.romsDirectory)
+                try? FileManager.default.removeItem(at: url)
+            } catch { print("[ROMWebServer] ZIP extraction error: \(error)") }
+        }
+        DispatchQueue.main.async {
+            self.lastUploadedFileName = url.lastPathComponent
+            TVGameManager.shared.loadGames()
+        }
+        sendJSONResponse(to: connection, status: "OK", filename: url.lastPathComponent, size: size)
+    }
+
     private func processUpload(headers: [String], body: Data, connection: NWConnection) {
         // Extract boundary without stripping leading hyphens
         var boundary: String?
@@ -170,36 +261,16 @@ class ROMWebServer: ObservableObject {
             return
         }
         
-        let destURL = TVGameManager.shared.romsDirectory.appendingPathComponent(filename)
-        
         do {
-            try fileData.write(to: destURL, options: .atomic)
-            print("[ROMWebServer] Successfully saved file: \(filename) (\(fileData.count) bytes) to \(destURL.path)")
-            
-            var extractedFiles: [String] = []
-            if filename.lowercased().hasSuffix(".zip") {
-                print("[ROMWebServer] Automatically extracting zip: \(filename)")
-                do {
-                    try FileManager.default.unzipItem(at: destURL, to: TVGameManager.shared.romsDirectory)
-                    try? FileManager.default.removeItem(at: destURL)
-                    extractedFiles.append("Extracted content of \(filename)")
-                } catch {
-                    print("[ROMWebServer] ZIP extraction error: \(error)")
-                }
-            }
-            
-            DispatchQueue.main.async {
-                self.lastUploadedFileName = filename
-                TVGameManager.shared.loadGames()
-            }
-            
-            self.sendJSONResponse(to: connection, status: "OK", filename: filename, size: fileData.count)
+            let upload = try TVROMUpload(directory: TVGameManager.shared.romsDirectory, filename: filename, expectedBytes: fileData.count)
+            try upload.append(fileData)
+            try upload.finish()
+            self.finishUpload(at: upload.destination, size: fileData.count, connection: connection)
         } catch {
-            print("[ROMWebServer] File write error: \(error)")
-            self.sendErrorResponse(to: connection, message: "Failed to write file to storage: \(error.localizedDescription)")
+            self.sendErrorResponse(to: connection, message: "Upload failed: \(error.localizedDescription)")
         }
     }
-    
+
     private func extractFilename(from data: Data) -> String? {
         guard let text = String(data: data.prefix(4096), encoding: .isoLatin1) else { return nil }
         if let range = text.range(of: "filename=\"") {
@@ -434,10 +505,28 @@ class ROMWebServer: ObservableObject {
                 .internal-title { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
                 .file-size { color: var(--text-muted); font-family: monospace; font-size: 13px; }
                 
-                .empty-state {
-                    text-align: center;
-                    padding: 40px 20px;
-                    color: var(--text-muted);
+                .progress-container {
+                    width: 100%;
+                    background: #0f172a;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    height: 12px;
+                    margin-top: 10px;
+                    border: 1px solid #334155;
+                }
+                .progress-fill {
+                    height: 100%;
+                    width: 0%;
+                    background: linear-gradient(90deg, #38bdf8, #818cf8);
+                    transition: width 0.1s ease-out;
+                }
+                .progress-meta {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 12px;
+                    color: #94a3b8;
+                    margin-top: 6px;
+                    font-family: monospace;
                 }
             </style>
         </head>
@@ -453,7 +542,7 @@ class ROMWebServer: ObservableObject {
                     <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
                         <div class="icon">🎮</div>
                         <div class="upload-title">Choose or Drop ROM Files Here</div>
-                        <div class="upload-hint">NES · SNES · N64 · GB/GBC · GBA · Mega Drive · DS · ZIP archives &amp; cover art</div>
+                        <div class="upload-hint">NES · SNES · N64 · GB/GBC · GBA · Mega Drive · DS · GameCube · ZIP archives &amp; cover art</div>
                         <input type="file" id="fileInput" multiple accept="\(TVSystem.uploadExtensions.map { "." + $0 }.joined(separator: ","))">
                     </div>
                     <div id="statusBox" class="status-box"></div>
@@ -506,23 +595,91 @@ class ROMWebServer: ObservableObject {
                     }
                 }
 
+                function uploadFile(file) {
+                    return new Promise((resolve, reject) => {
+                        const xhr = new XMLHttpRequest();
+                        const startTime = Date.now();
+                        
+                        statusBox.style.display = 'block';
+                        statusBox.style.background = '#1e293b';
+                        statusBox.style.border = '1px solid #38bdf8';
+                        statusBox.style.color = '#e2e8f0';
+                        statusBox.innerHTML = `
+                            <div style="font-weight:600; color:#38bdf8; margin-bottom:4px;">Uploading ${file.name}</div>
+                            <div class="progress-container">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-meta">
+                                <span id="progressPercent">0%</span>
+                                <span id="progressBytes">0 / ${(file.size / (1024*1024)).toFixed(1)} MB</span>
+                                <span id="progressSpeed">-- MB/s</span>
+                            </div>
+                        `;
+                        
+                        const progressFill = document.getElementById('progressFill');
+                        const progressPercent = document.getElementById('progressPercent');
+                        const progressBytes = document.getElementById('progressBytes');
+                        const progressSpeed = document.getElementById('progressSpeed');
+                        
+                        xhr.upload.onprogress = (e) => {
+                            if (e.lengthComputable) {
+                                const percent = Math.min(100, Math.round((e.loaded / e.total) * 100));
+                                const elapsedSec = Math.max(0.1, (Date.now() - startTime) / 1000);
+                                const speedMB = (e.loaded / (1024 * 1024)) / elapsedSec;
+                                
+                                if (progressFill) progressFill.style.width = percent + '%';
+                                if (progressPercent) progressPercent.innerText = percent + '%';
+                                if (progressBytes) {
+                                    const loadedMB = (e.loaded / (1024 * 1024)).toFixed(1);
+                                    const totalMB = (e.total / (1024 * 1024)).toFixed(1);
+                                    progressBytes.innerText = `${loadedMB} / ${totalMB} MB`;
+                                }
+                                if (progressSpeed) progressSpeed.innerText = speedMB.toFixed(1) + ' MB/s';
+                            }
+                        };
+                        
+                        xhr.onload = () => {
+                            if (xhr.status >= 200 && xhr.status < 300) {
+                                try {
+                                    const json = JSON.parse(xhr.responseText);
+                                    if (json.status === 'OK') {
+                                        statusBox.style.background = '#143828';
+                                        statusBox.style.color = '#4ade80';
+                                        statusBox.style.border = '1px solid #22c55e';
+                                        statusBox.innerHTML = `✓ <strong>${file.name}</strong> uploaded successfully! Saved to Apple TV storage.`;
+                                        resolve(json);
+                                    } else {
+                                        reject(new Error(json.error || 'Server error'));
+                                    }
+                                } catch (e) {
+                                    reject(e);
+                                }
+                            } else {
+                                reject(new Error(`HTTP ${xhr.status}: ${xhr.statusText || 'Upload failed'}`));
+                            }
+                        };
+                        
+                        xhr.onerror = () => reject(new Error('Network connection error during upload.'));
+                        xhr.onabort = () => reject(new Error('Upload aborted.'));
+                        
+                        xhr.open('POST', '/upload-file?filename=' + encodeURIComponent(file.name));
+                        xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+                        xhr.send(file);
+                    });
+                }
+
                 async function uploadFiles(files) {
                     for (let file of files) {
-                        showStatus('Uploading ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)...', 'progress');
-                        let formData = new FormData();
-                        formData.append('file', file);
-                        
                         try {
-                            let resp = await fetch('/upload', { method: 'POST', body: formData });
-                            let json = await resp.json();
-                            if (json.status === 'OK') {
-                                showStatus('✓ ' + file.name + ' uploaded successfully! Saved to Apple TV.', 'success');
-                                fetchGames();
-                            } else {
-                                showStatus('✗ Error: ' + (json.error || 'Upload failed'), 'error');
-                            }
+                            await uploadFile(file);
+                            fetchGames();
                         } catch (err) {
-                            showStatus('✗ Connection error: ' + err.message, 'error');
+                            statusBox.style.display = 'block';
+                            statusBox.style.background = '#3b161c';
+                            statusBox.style.color = '#f87171';
+                            statusBox.style.border = '1px solid #ef4444';
+                            statusBox.innerText = '✗ Error: ' + err.message;
+                            break;
                         }
                     }
                 }
@@ -621,7 +778,8 @@ class ROMWebServer: ObservableObject {
     }
     
     private func sendJSONResponse(to connection: NWConnection, status: String, filename: String, size: Int) {
-        let json = "{\"status\":\"\(status)\",\"filename\":\"\(filename)\",\"size\":\(size)}"
+        let data = try! JSONSerialization.data(withJSONObject: ["status": status, "filename": filename, "size": size])
+        let json = String(decoding: data, as: UTF8.self)
         let response = """
         HTTP/1.1 200 OK\r
         Content-Type: application/json; charset=utf-8\r
@@ -636,11 +794,12 @@ class ROMWebServer: ObservableObject {
         }))
     }
     
-    private func sendErrorResponse(to connection: NWConnection, message: String) {
-        let escaped = message.replacingOccurrences(of: "\"", with: "\\\"")
-        let json = "{\"status\":\"ERROR\",\"error\":\"\(escaped)\"}"
+    private func sendErrorResponse(to connection: NWConnection, message: String, statusCode: Int = 400) {
+        let data = try! JSONSerialization.data(withJSONObject: ["status": "ERROR", "error": message])
+        let json = String(decoding: data, as: UTF8.self)
+        let statusLine = statusCode == 503 ? "503 Service Unavailable" : "400 Bad Request"
         let response = """
-        HTTP/1.1 400 Bad Request\r
+        HTTP/1.1 \(statusLine)\r
         Content-Type: application/json; charset=utf-8\r
         Content-Length: \(json.utf8.count)\r
         Access-Control-Allow-Origin: *\r

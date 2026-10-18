@@ -26,9 +26,7 @@ public struct Dolphin: DeltaCoreProtocol
     public var videoFormat: VideoFormat { VideoFormat(format: .openGLES3, dimensions: DolphinEmulatorBridge.shared.preferredVideoResolution) }
     
     public var supportedCheatFormats: Set<CheatFormat> {
-        let actionReplayFormat = CheatFormat(name: NSLocalizedString("Action Replay", comment: ""), format: "XXXX-XXXX-XXXXX", type: .actionReplay)
-        let geckoFormat = CheatFormat(name: NSLocalizedString("Gecko", comment: ""), format: "XXXXXXXX YYYYYYYY", type: .actionReplay)
-        return [actionReplayFormat, geckoFormat]
+        return []
     }
     
     public var emulatorBridge: EmulatorBridging { DolphinEmulatorBridge.shared }
