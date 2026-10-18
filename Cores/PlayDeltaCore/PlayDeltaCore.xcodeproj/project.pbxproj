@@ -1,0 +1,607 @@
+// !$*UTF8*$!
+{
+	"classes" = {
+	};
+	"objectVersion" = "77";
+	"archiveVersion" = "1";
+	"objects" = {
+		"19C5834AF6F84FE3B9217291" = {
+			"path" = "PlayDeltaCore";
+			"isa" = "PBXGroup";
+			"children" = (
+				"433E93095E4F4D9698FDE588",
+				"35625DE0CE0E4A049F1E6E4B",
+			);
+			"sourceTree" = "<group>";
+		};
+		"A66A2DCE40344B20B5BA4500" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "00E032783DAE4301B49E34F3";
+		};
+		"B1F6E4E29AED4FEAB4BBAD0A" = {
+			"alwaysOutOfDate" = "1";
+			"inputPaths" = (
+			);
+			"buildActionMask" = "2147483647";
+			"shellPath" = "/bin/bash";
+			"outputPaths" = (
+				"$(BUILD_DIR)/PlayBackend/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/libPlayBackend.a",
+			);
+			"isa" = "PBXShellScriptBuildPhase";
+			"runOnlyForDeploymentPostprocessing" = "0";
+			"shellScript" = "\"$PROJECT_DIR/build-backend.sh\" \"$PLATFORM_NAME\" \"$CONFIGURATION\" \"$BUILD_DIR/PlayBackend/$CONFIGURATION$EFFECTIVE_PLATFORM_NAME\"\n";
+			"files" = (
+			);
+			"name" = "Build pinned Play backend";
+		};
+		"71E9818AA08F46079E6C8040" = {
+			"isa" = "PBXGroup";
+			"name" = "Products";
+			"children" = (
+				"60FB6D0FDB26481E8235F5BC",
+			);
+			"sourceTree" = "<group>";
+		};
+		"117FC4E77CE14EB4ADA89D65" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"34186EEE31AD46AAB8FE12DE",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"E95BE97DCD2E4A96B21000D8" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"42AE372C7B3247DFAFE36A36",
+				"CAB773B60A464D5182E60FA5",
+				"519C717FA29946A9871D0C6D",
+				"1BD92DFD60994EBB818B9C84",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"EFCAD072C2A846B1BEA4E37C" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"DYLIB_CURRENT_VERSION" = "1";
+				"DYLIB_INSTALL_NAME_BASE" = "@rpath";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator appletvos appletvsimulator";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.delta.PlayDeltaCore";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "c++17";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"FRAMEWORK_SEARCH_PATHS" = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)",
+				);
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"OTHER_LDFLAGS" = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+					"-framework DeltaCore",
+					"-force_load",
+					"$(BUILD_DIR)/PlayBackend/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/libPlayBackend.a",
+					"-framework OpenGLES",
+					"-framework CFNetwork",
+					"-framework Security",
+					"-lz",
+					"-lbz2",
+				);
+				"DYLIB_COMPATIBILITY_VERSION" = "1";
+				"VERSIONING_SYSTEM" = "apple-generic";
+				"SDKROOT" = "iphoneos";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"HEADER_SEARCH_PATHS" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PlayDeltaCore",
+					"$(PROJECT_DIR)/PlayDeltaCore/Bridge",
+					"$(PROJECT_DIR)/Backend",
+					"$(PROJECT_DIR)/Backend",
+					"$(PROJECT_DIR)/Backend",
+				);
+				"PRODUCT_NAME" = "PlayDeltaCore";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"CODE_SIGN_IDENTITY" = "";
+				"SKIP_INSTALL" = "YES";
+				"INSTALL_PATH" = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				"TARGETED_DEVICE_FAMILY[sdk=appletv*]" = "3";
+				"TVOS_DEPLOYMENT_TARGET" = "17.0";
+				"DEFINES_MODULE" = "YES";
+				"INFOPLIST_FILE" = "PlayDeltaCore/Info.plist";
+				"ARCHS" = "arm64";
+			};
+			"name" = "Release";
+		};
+		"434BE1BB53044702B0D4452E" = {
+			"isa" = "XCConfigurationList";
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Debug";
+			"buildConfigurations" = (
+				"B20CE72172364D4DAD3BDAC5",
+				"EFCAD072C2A846B1BEA4E37C",
+			);
+		};
+		"0E1C34AFCC644986AD19E6EB" = {
+			"isa" = "PBXGroup";
+			"sourceTree" = "<group>";
+			"children" = (
+				"930383A6868343F69FC5B965",
+				"19C5834AF6F84FE3B9217291",
+				"BE7B8CE0F73F4F84B29ED7FC",
+				"CB3044795EB54D5D940B75B3",
+				"C8CE31B5FC024F30A4F29359",
+				"71E9818AA08F46079E6C8040",
+			);
+		};
+		"433E93095E4F4D9698FDE588" = {
+			"path" = "Play.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "<group>";
+		};
+		"B20CE72172364D4DAD3BDAC5" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"DYLIB_CURRENT_VERSION" = "1";
+				"DYLIB_INSTALL_NAME_BASE" = "@rpath";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator appletvos appletvsimulator";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.delta.PlayDeltaCore";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "c++17";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"FRAMEWORK_SEARCH_PATHS" = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)",
+				);
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"OTHER_LDFLAGS" = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+					"-framework DeltaCore",
+					"-force_load",
+					"$(BUILD_DIR)/PlayBackend/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/libPlayBackend.a",
+					"-framework OpenGLES",
+					"-framework CFNetwork",
+					"-framework Security",
+					"-lz",
+					"-lbz2",
+				);
+				"DYLIB_COMPATIBILITY_VERSION" = "1";
+				"VERSIONING_SYSTEM" = "apple-generic";
+				"SDKROOT" = "iphoneos";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"HEADER_SEARCH_PATHS" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PlayDeltaCore",
+					"$(PROJECT_DIR)/PlayDeltaCore/Bridge",
+					"$(PROJECT_DIR)/Backend",
+					"$(PROJECT_DIR)/Backend",
+					"$(PROJECT_DIR)/Backend",
+				);
+				"PRODUCT_NAME" = "PlayDeltaCore";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"CODE_SIGN_IDENTITY" = "";
+				"SKIP_INSTALL" = "YES";
+				"INSTALL_PATH" = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				"TARGETED_DEVICE_FAMILY[sdk=appletv*]" = "3";
+				"TVOS_DEPLOYMENT_TARGET" = "17.0";
+				"DEFINES_MODULE" = "YES";
+				"INFOPLIST_FILE" = "PlayDeltaCore/Info.plist";
+				"ARCHS" = "arm64";
+			};
+			"name" = "Debug";
+		};
+		"663DE787E579492DB017517C" = {
+			"path" = "PlayEmulatorBridge.h";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.c.h";
+			"sourceTree" = "<group>";
+		};
+		"1BD92DFD60994EBB818B9C84" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "D4C573ED93D84F1BAE5E470E";
+		};
+		"5ED7496076B14748B8D1031E" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "35625DE0CE0E4A049F1E6E4B";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"Public",
+				);
+			};
+		};
+		"BE7B8CE0F73F4F84B29ED7FC" = {
+			"path" = "PlayDeltaCore/Resources";
+			"isa" = "PBXGroup";
+			"name" = "Resources";
+			"children" = (
+				"00E032783DAE4301B49E34F3",
+				"A09ED8EDCC7A47408220F786",
+			);
+			"sourceTree" = "<group>";
+		};
+		"B7C538B9B5DA4208B8ECED99" = {
+			"buildConfigurationList" = "76F60D3477644C3CB2546A49";
+			"targets" = (
+				"CFC7500D8A114C41BBBC1C0B",
+				"98873A99144E4118A4A5C4A6",
+			);
+			"minimizedProjectReferenceProxies" = "1";
+			"developmentRegion" = "en";
+			"knownRegions" = (
+				"Base",
+				"en",
+			);
+			"isa" = "PBXProject";
+			"productRefGroup" = "71E9818AA08F46079E6C8040";
+			"projectDirPath" = "";
+			"attributes" = {
+				"LastUpgradeCheck" = "1600";
+				"BuildIndependentTargetsInParallel" = "YES";
+				"TargetAttributes" = {
+				};
+			};
+			"hasScannedForEncodings" = "0";
+			"projectRoot" = "";
+			"preferredProjectObjectVersion" = "77";
+			"mainGroup" = "0E1C34AFCC644986AD19E6EB";
+		};
+		"42AE372C7B3247DFAFE36A36" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "433E93095E4F4D9698FDE588";
+		};
+		"EBEF9B43CC274C3ABC45A7B2" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "663DE787E579492DB017517C";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"Public",
+				);
+			};
+		};
+		"C5AEDD418E3E400197613794" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"A66A2DCE40344B20B5BA4500",
+				"EBE494A9E8E644A18C8A1ACB",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"35625DE0CE0E4A049F1E6E4B" = {
+			"path" = "PlayDeltaCore.h";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.c.h";
+			"sourceTree" = "<group>";
+		};
+		"4BAC4F3D66DA4FC59089DFCA" = {
+			"isa" = "PBXHeadersBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"5ED7496076B14748B8D1031E",
+				"EBEF9B43CC274C3ABC45A7B2",
+				"AE1A771C789D4770B4233F0C",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"AE6E0A43C38E403EB9F6ECA0" = {
+			"path" = "PlayEmulatorBridge.mm";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.cpp.objcpp";
+			"sourceTree" = "<group>";
+		};
+		"930383A6868343F69FC5B965" = {
+			"path" = "PlayDeltaCore/Bridge";
+			"isa" = "PBXGroup";
+			"name" = "Bridge";
+			"children" = (
+				"663DE787E579492DB017517C",
+				"AE6E0A43C38E403EB9F6ECA0",
+				"F6F75DBF25784FF481D61886",
+				"C2803D5A6AEE4E1EB259701A",
+			);
+			"sourceTree" = "<group>";
+		};
+		"CFC7500D8A114C41BBBC1C0B" = {
+			"productType" = "com.apple.product-type.framework";
+			"productReference" = "60FB6D0FDB26481E8235F5BC";
+			"buildConfigurationList" = "434BE1BB53044702B0D4452E";
+			"packageProductDependencies" = (
+			);
+			"productName" = "PlayDeltaCore";
+			"isa" = "PBXNativeTarget";
+			"buildPhases" = (
+				"4BAC4F3D66DA4FC59089DFCA",
+				"E95BE97DCD2E4A96B21000D8",
+				"C5AEDD418E3E400197613794",
+				"117FC4E77CE14EB4ADA89D65",
+			);
+			"dependencies" = (
+				"BEC34263AD424EDA9DB04C8E",
+			);
+			"name" = "PlayDeltaCore";
+			"buildRules" = (
+			);
+		};
+		"46F209518C73499AB55E6001" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_WARN_RANGE_LOOP_ANALYSIS" = "YES";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"CLANG_WARN_INFINITE_RECURSION" = "YES";
+				"ONLY_ACTIVE_ARCH" = "YES";
+				"GCC_WARN_UNUSED_VARIABLE" = "YES";
+				"CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" = "YES";
+				"CLANG_WARN_UNGUARDED_AVAILABILITY" = "YES_AGGRESSIVE";
+				"COPY_PHASE_STRIP" = "NO";
+				"CLANG_WARN_BOOL_CONVERSION" = "YES";
+				"CLANG_WARN_ENUM_CONVERSION" = "YES";
+				"CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" = "YES";
+				"CLANG_WARN_COMMA" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG";
+				"SWIFT_VERSION" = "5.0";
+				"CLANG_WARN_INT_CONVERSION" = "YES";
+				"ENABLE_STRICT_OBJC_MSGSEND" = "YES";
+				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
+				"CLANG_WARN_EMPTY_BODY" = "YES";
+				"SDKROOT" = "iphoneos";
+				"DEFINES_MODULE" = "YES";
+				"CLANG_WARN_DOCUMENTATION_COMMENTS" = "YES";
+				"MTL_ENABLE_DEBUG_INFO" = "INCLUDE_SOURCE";
+				"MTL_FAST_MATH" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"CLANG_CXX_LIBRARY" = "libc++";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"GCC_WARN_UNINITIALIZED_AUTOS" = "YES_AGGRESSIVE";
+				"GCC_C_LANGUAGE_STANDARD" = "gnu11";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"ALWAYS_SEARCH_USER_PATHS" = "NO";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"CLANG_WARN_DIRECT_OBJC_ISA_USAGE" = "YES_ERROR";
+				"ENABLE_TESTABILITY" = "YES";
+				"CLANG_WARN_CONSTANT_CONVERSION" = "YES";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"CLANG_WARN_OBJC_ROOT_CLASS" = "YES_ERROR";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION" = "YES";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "c++17";
+				"GCC_DYNAMIC_NO_PIC" = "NO";
+				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+				"CLANG_ANALYZER_NONNULL" = "YES";
+				"CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION" = "YES_AGGRESSIVE";
+				"CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER" = "YES";
+				"CLANG_ENABLE_OBJC_WEAK" = "YES";
+				"CLANG_WARN_STRICT_PROTOTYPES" = "YES";
+				"GCC_OPTIMIZATION_LEVEL" = "0";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"GCC_WARN_ABOUT_RETURN_TYPE" = "YES_ERROR";
+				"GCC_WARN_UNUSED_FUNCTION" = "YES";
+				"CLANG_WARN_UNREACHABLE_CODE" = "YES";
+				"SKIP_INSTALL" = "YES";
+				"ENABLE_BITCODE" = "NO";
+				"GCC_PREPROCESSOR_DEFINITIONS" = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"ARCHS" = "arm64";
+			};
+			"name" = "Debug";
+		};
+		"C8CE31B5FC024F30A4F29359" = {
+			"isa" = "PBXGroup";
+			"name" = "Frameworks";
+			"children" = (
+				"3B642A620EE04EC087680C48",
+			);
+			"sourceTree" = "<group>";
+		};
+		"DACFFCC1531C4B299F911ACC" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"CLANG_WARN_RANGE_LOOP_ANALYSIS" = "YES";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"CLANG_WARN_INFINITE_RECURSION" = "YES";
+				"SWIFT_COMPILATION_MODE" = "wholemodule";
+				"GCC_WARN_UNUSED_VARIABLE" = "YES";
+				"CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING" = "YES";
+				"CLANG_WARN_UNGUARDED_AVAILABILITY" = "YES_AGGRESSIVE";
+				"COPY_PHASE_STRIP" = "NO";
+				"CLANG_WARN_BOOL_CONVERSION" = "YES";
+				"CLANG_WARN_ENUM_CONVERSION" = "YES";
+				"CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS" = "YES";
+				"CLANG_WARN_COMMA" = "YES";
+				"SWIFT_VERSION" = "5.0";
+				"CLANG_WARN_INT_CONVERSION" = "YES";
+				"ENABLE_STRICT_OBJC_MSGSEND" = "YES";
+				"CLANG_WARN_SUSPICIOUS_MOVE" = "YES";
+				"CLANG_WARN_EMPTY_BODY" = "YES";
+				"SDKROOT" = "iphoneos";
+				"DEFINES_MODULE" = "YES";
+				"CLANG_WARN_DOCUMENTATION_COMMENTS" = "YES";
+				"MTL_ENABLE_DEBUG_INFO" = "NO";
+				"MTL_FAST_MATH" = "YES";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"CLANG_CXX_LIBRARY" = "libc++";
+				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"GCC_WARN_UNINITIALIZED_AUTOS" = "YES_AGGRESSIVE";
+				"GCC_C_LANGUAGE_STANDARD" = "gnu11";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"ALWAYS_SEARCH_USER_PATHS" = "NO";
+				"CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" = "YES";
+				"CLANG_WARN_DIRECT_OBJC_ISA_USAGE" = "YES_ERROR";
+				"CLANG_WARN_CONSTANT_CONVERSION" = "YES";
+				"GCC_NO_COMMON_BLOCKS" = "YES";
+				"CLANG_WARN_OBJC_ROOT_CLASS" = "YES_ERROR";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"GCC_WARN_64_TO_32_BIT_CONVERSION" = "YES";
+				"CLANG_CXX_LANGUAGE_STANDARD" = "c++17";
+				"CLANG_WARN__DUPLICATE_METHOD_MATCH" = "YES";
+				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+				"GCC_WARN_UNDECLARED_SELECTOR" = "YES";
+				"CLANG_ANALYZER_NONNULL" = "YES";
+				"CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION" = "YES_AGGRESSIVE";
+				"CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER" = "YES";
+				"CLANG_ENABLE_OBJC_WEAK" = "YES";
+				"CLANG_WARN_STRICT_PROTOTYPES" = "YES";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+				"GCC_WARN_ABOUT_RETURN_TYPE" = "YES_ERROR";
+				"GCC_WARN_UNUSED_FUNCTION" = "YES";
+				"CLANG_WARN_UNREACHABLE_CODE" = "YES";
+				"ENABLE_NS_ASSERTIONS" = "NO";
+				"SKIP_INSTALL" = "YES";
+				"ENABLE_BITCODE" = "NO";
+				"CLANG_WARN_OBJC_LITERAL_CONVERSION" = "YES";
+				"CLANG_WARN_NON_LITERAL_NULL_CONVERSION" = "YES";
+				"ARCHS" = "arm64";
+			};
+			"name" = "Release";
+		};
+		"60FB6D0FDB26481E8235F5BC" = {
+			"path" = "PlayDeltaCore.framework";
+			"isa" = "PBXFileReference";
+			"includeInIndex" = "0";
+			"explicitFileType" = "wrapper.framework";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"D4C573ED93D84F1BAE5E470E" = {
+			"path" = "PS2GameInput.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "<group>";
+		};
+		"76F60D3477644C3CB2546A49" = {
+			"isa" = "XCConfigurationList";
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Debug";
+			"buildConfigurations" = (
+				"46F209518C73499AB55E6001",
+				"DACFFCC1531C4B299F911ACC",
+			);
+		};
+		"34186EEE31AD46AAB8FE12DE" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "3B642A620EE04EC087680C48";
+		};
+		"519C717FA29946A9871D0C6D" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "C2803D5A6AEE4E1EB259701A";
+		};
+		"AE1A771C789D4770B4233F0C" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "F6F75DBF25784FF481D61886";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"Public",
+				);
+			};
+		};
+		"00E032783DAE4301B49E34F3" = {
+			"isa" = "PBXFileReference";
+			"path" = "Standard.deltamapping";
+			"sourceTree" = "<group>";
+		};
+		"3B642A620EE04EC087680C48" = {
+			"path" = "DeltaCore.framework";
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.framework";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"EBE494A9E8E644A18C8A1ACB" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "A09ED8EDCC7A47408220F786";
+		};
+		"A09ED8EDCC7A47408220F786" = {
+			"path" = "THIRD_PARTY_NOTICES.txt";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "text";
+			"sourceTree" = "<group>";
+		};
+		"C2803D5A6AEE4E1EB259701A" = {
+			"path" = "PlayTypes.m";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.c.objc";
+			"sourceTree" = "<group>";
+		};
+		"CAB773B60A464D5182E60FA5" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AE6E0A43C38E403EB9F6ECA0";
+		};
+		"CB3044795EB54D5D940B75B3" = {
+			"path" = "PlayDeltaCore/Types";
+			"isa" = "PBXGroup";
+			"name" = "Types";
+			"children" = (
+				"D4C573ED93D84F1BAE5E470E",
+			);
+			"sourceTree" = "<group>";
+		};
+		"F6F75DBF25784FF481D61886" = {
+			"path" = "PlayTypes.h";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.c.h";
+			"sourceTree" = "<group>";
+		};
+		"2871CB35CF294C90A1F41498" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Debug";
+			"buildSettings" = {
+				"ARCHS" = "arm64";
+				"SDKROOT" = "iphoneos";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator appletvos appletvsimulator";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"TVOS_DEPLOYMENT_TARGET" = "17.0";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+			};
+		};
+		"CDB2F50DAD414363A7FAD7D4" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Release";
+			"buildSettings" = {
+				"ARCHS" = "arm64";
+				"SDKROOT" = "iphoneos";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator appletvos appletvsimulator";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"TVOS_DEPLOYMENT_TARGET" = "17.0";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
+			};
+		};
+		"46382336B1C34D73AD320F7A" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"2871CB35CF294C90A1F41498",
+				"CDB2F50DAD414363A7FAD7D4",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		"98873A99144E4118A4A5C4A6" = {
+			"isa" = "PBXAggregateTarget";
+			"buildConfigurationList" = "46382336B1C34D73AD320F7A";
+			"buildPhases" = (
+				"B1F6E4E29AED4FEAB4BBAD0A",
+			);
+			"dependencies" = (
+			);
+			"name" = "PlayBackend";
+			"productName" = "PlayBackend";
+		};
+		"BEC34263AD424EDA9DB04C8E" = {
+			"isa" = "PBXTargetDependency";
+			"target" = "98873A99144E4118A4A5C4A6";
+		};
+	};
+	"rootObject" = "B7C538B9B5DA4208B8ECED99";
+}
